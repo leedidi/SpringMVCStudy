@@ -32,6 +32,30 @@
 	
 </style>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		$("#submitBtn").click(function()
+		{
+			$("#err").css("display", "none");
+			
+			if($("#name").val()=="" || $("#telephone").val()=="")
+			{
+				$("#err").css("display", "inline");
+				return;
+			}
+			
+			$("#memberForm").submit();
+			
+		});
+	});
+	
+</script>
+
+
+
 
 </head>
 <body>
@@ -42,7 +66,7 @@
 </div>
 
 <div>
-	<form>
+	<form action="memberinsert.action" method="post" id="memberForm">
 		이름 <input type="text" name="name" id="name" class="control" required="required">
 		<br>
 		전화 <input type="text" name="telephone" id="telephone" class="control" required="required">

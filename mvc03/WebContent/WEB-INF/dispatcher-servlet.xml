@@ -45,6 +45,14 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
          <ref bean="memberDAO"/>
       </property>
    </bean>
+   
+   <!-- MemberInsertController -->
+   <bean name="/memberinsert.action" class="com.test.mvc.MemberInsertController">
+      <property name="dao">
+         <ref bean="memberDAO"/>
+      </property>
+   </bean>
+
 
 </beans>
 
