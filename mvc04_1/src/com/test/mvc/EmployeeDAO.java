@@ -36,7 +36,9 @@ public class EmployeeDAO implements IEmployeeDAO
 		
 		ArrayList<Employee> result = new ArrayList<Employee>();
 		
-		String sql ="SELECT EMPLOYEEID, NAME, SSN, BIRTHDAY"
+		String sql = "";
+		
+		sql="SELECT EMPLOYEEID, NAME, SSN, BIRTHDAY"
 				+ ", LUNAR, LUNARNAME, TELEPHONE, DEPARTMENTID, DEPARTMENTNAME"
 				+ ", POSITIONID, POSITIONNAME, REGIONID, REGIONNAME"
 				+ ", BASICPAY, EXTRAPAY, PAY, GRADE"
