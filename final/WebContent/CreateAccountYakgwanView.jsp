@@ -12,8 +12,8 @@
 </head>
 <body>
 
-<!--@@ 1. 메인 화면/ 3. 회원 가입  -->
-<!--@@ 3. 메인 화면 - a. 약관 동의  -->
+<!--@@ 1. 메인 화면- 나중에 하기로 함/ 3. 회원가입  -->
+<!--@@ 3. 회원가입 - a. 약관 동의  -->
 
 <div>
 	
@@ -24,6 +24,7 @@
 
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
+	<form action="">
 	<h1>회원 약관 동의</h1>
 	<hr>
 		
@@ -104,9 +105,9 @@
    		<font size="2">프로모션 정보 수신 동의(선택)</font>
 		
 		<br><br>
-		<button type="button" class="btn" >취소</button>
-		<button type="button" class="btn">확인</button>
-		
+		<button type="submit" class="btn" >취소</button>
+		<button type="submit" class="btn">확인</button>
+		</form>
 		</div>
 			
 		
