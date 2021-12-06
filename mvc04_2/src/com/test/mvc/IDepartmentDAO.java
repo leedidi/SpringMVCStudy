@@ -8,7 +8,7 @@ package com.test.mvc;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface IDeparmentDAO
+public interface IDepartmentDAO
 {
 	public ArrayList<Department> list() throws SQLException;
 	

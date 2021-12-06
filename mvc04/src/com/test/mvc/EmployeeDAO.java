@@ -1,11 +1,11 @@
-/*==================================================
-  #9. EmployeeDAO.java
-  - 데이터베이스 액션 처리 클래스
-  - 직원 정보 입력 / 출력 / 수정 / 삭제 액션
-  - Connection 객체에 대한 의존성 주입을 위한 준비
-  	→ 인터페이스 형태의 속성 구성(DataSource)
-  	→ setter 메소드 정의
- ==================================================*/
+/* ====================================================
+   #9. EmployeeDAO.java
+   - 데이터베이스 액션 처리 클래스
+   - 직원 정보 입력 / 출력 / 수정/ 삭제 액션
+   - Connection 객체에 대한 의존성 주입을 위한 준비 
+     → 인터페이스 형태의 속성 구성(DataSource)
+     → setter 메소드 정의
+==================================================== */
 
 package com.test.mvc;
 
@@ -20,56 +20,56 @@ import javax.sql.DataSource;
 public class EmployeeDAO implements IEmployeeDAO
 {
 	// 주요 속성 구성 → 인터페이스 형태
-	private DataSource datasource;
+	private DataSource dataSource;
 	
 	// setter 구성
-	public void setDatasource(DataSource datasource)
+	public void setDataSource(DataSource dataSource)
 	{
-		this.datasource = datasource;
+		this.dataSource = dataSource;
 	}
-	
-	// 직원 리스트 조회
+
+	// 직원 리스트
 	@Override
 	public ArrayList<Employee> list() throws SQLException
 	{
-		Connection conn = datasource.getConnection();
-		
 		ArrayList<Employee> result = new ArrayList<Employee>();
 		
-		String sql ="SELECT EMPLOYEEID, NAME, SSN, BIRTHDAY"
-				+ ", LUNAR, LUNARNAME, TELEPHONE, DEPARTMENTID, DEPARTMENTNAME"
-				+ ", POSITIONID, POSITIONNAME, REGIONID, REGIONNAME"
-				+ ", BASICPAY, EXTRAPAY, PAY, GRADE"
-				+ " FROM EMPLOYEEVIEW"
-				+ " ORDER BY EMPLOYEEID";
+		Connection conn = dataSource.getConnection();
 		
+		String sql = "SELECT EMPLOYEEID, NAME, SSN, BIRTHDAY"
+				+ ", LUNAR, LUNARNAME, TELEPHONE"
+				+ ", DEPARTMENTID, DEPARTMENTNAME"
+				+ ", POSITIONID, POSITIONNAME"
+				+ ", REGIONID, REGIONNAME"
+				+ ", BASICPAY, EXTRAPAY, PAY, GRADE"
+				+ " FROM EMPLOYEEVIEW" 
+				+ " ORDER BY EMPLOYEEID";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		
+		while(rs.next())
 		{
-			Employee employee = new Employee();
+			Employee emp = new Employee();
+			emp.setEmployeeId(rs.getString("EMPLOYEEID"));
+			emp.setName(rs.getString("NAME"));
+			emp.setSsn(rs.getString("SSN"));
+			emp.setBirthday(rs.getString("BIRTHDAY"));
+			emp.setLunar(rs.getInt("LUNAR"));
+			emp.setLunarName(rs.getString("LUNARNAME"));
+			emp.setTelephone(rs.getString("TELEPHONE"));
+			emp.setDepartmentId(rs.getString("DEPARTMENTID"));
+			emp.setDepartmentName(rs.getString("DEPARTMENTNAME"));
+			emp.setPositionId(rs.getString("POSITIONID"));
+			emp.setPositionName(rs.getString("POSITIONNAME"));
+			emp.setRegionId(rs.getString("REGIONID"));
+			emp.setRegionName(rs.getString("REGIONNAME"));
+			emp.setBasicPay(rs.getInt("BASICPAY"));
+			emp.setExtraPay(rs.getInt("EXTRAPAY"));
+			emp.setPay(rs.getInt("PAY"));
+			emp.setGrade(rs.getInt("GRADE"));
 			
-			employee.setEmployeeId(rs.getString("EMPLOYEEID"));
-			employee.setEmployeeName(rs.getString("NAME"));
-			employee.setSsn(rs.getString("SSN"));
-			employee.setBirthday(rs.getString("BIRTHDAY"));
-			employee.setLunar(rs.getInt("LUNAR"));
-			employee.setLunarName(rs.getString("LUNARNAME"));
-			employee.setTelephone(rs.getString("TELEPHONE"));
-			employee.setDepartmentId(rs.getString("DEPARTMENTID"));
-			employee.setDepartmentName(rs.getString("DEPARTMENTNAME"));
-			employee.setPositionId(rs.getString("POSITIONID"));
-			employee.setPositionName(rs.getString("POSITIONNAME"));
-			employee.setRegionId(rs.getString("REGIONID"));
-			employee.setRegionName(rs.getString("REGIONNAME"));
-			employee.setBasicPay(rs.getInt("BASICPAY"));
-			employee.setExtraPay(rs.getInt("EXTRAPAY"));
-			employee.setPay(rs.getInt("PAY"));
-			employee.setGrade(rs.getInt("GRADE"));
-			
-			result.add(employee);
-			
+			result.add(emp);
 		}
 		
 		rs.close();
@@ -79,30 +79,28 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	// 지역 리스트 조회
+	// 지역 리스트
 	@Override
 	public ArrayList<Region> regionList() throws SQLException
 	{
-		Connection conn = datasource.getConnection();
-		
 		ArrayList<Region> result = new ArrayList<Region>();
 		
+		Connection conn = dataSource.getConnection();
+		
 		String sql = "SELECT REGIONID, REGIONNAME, DELCHECK"
-				+ " FROM REGIONVIEW"
-				+ " ORDER BY REGIONID";
+				+ " FROM REGIONVIEW ORDER BY REGIONID";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		
+		while(rs.next())
 		{
 			Region reg = new Region();
-			
 			reg.setRegionId(rs.getString("REGIONID"));
 			reg.setRegionName(rs.getString("REGIONNAME"));
 			reg.setDelCheck(rs.getInt("DELCHECK"));
 			
 			result.add(reg);
-			
 		}
 		
 		rs.close();
@@ -112,24 +110,23 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	// 부서 리스트 조회
+	// 부서 리스트
 	@Override
 	public ArrayList<Department> departmentList() throws SQLException
 	{
 		ArrayList<Department> result = new ArrayList<Department>();
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
-		String sql ="SELECT DEPARTMENTID, DEPARTMENTNAME, DELCHECK"
-				+ " FROM DEPARTMENTVIEW"
-				+ "ORDER BY DEPARTMENTID";
+		String sql = "SELECT DEPARTMENTID, DEPARTMENTNAME, DELCHECK"
+				  + " FROM DEPARTMENTVIEW ORDER BY DEPARTMENTID";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		
+		while(rs.next())
 		{
 			Department dep = new Department();
-			
 			dep.setDepartmentId(rs.getString("DEPARTMENTID"));
 			dep.setDepartmentName(rs.getString("DEPARTMENTNAME"));
 			dep.setDelCheck(rs.getInt("DELCHECK"));
@@ -144,24 +141,23 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	//직위 리스트 조회
+	// 직위 리스트
 	@Override
 	public ArrayList<Position> positionList() throws SQLException
 	{
 		ArrayList<Position> result = new ArrayList<Position>();
-
-		Connection conn = datasource.getConnection();
+		
+		Connection conn = dataSource.getConnection();
 		
 		String sql = "SELECT POSITIONID, POSITIONNAME, MINBASICPAY, DELCHECK"
-				+ " FROM POSITIONVIEW"
-				+ " ORDER BY POSITIONID";
+				   + " FROM POSITIONVIEW ORDER BY POSITIONID";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		
+		while(rs.next())
 		{
 			Position pos = new Position();
-			
 			pos.setPositionId(rs.getString("POSITIONID"));
 			pos.setPositionName(rs.getString("POSITIONNAME"));
 			pos.setMinBasicPay(rs.getInt("MINBASICPAY"));
@@ -176,27 +172,23 @@ public class EmployeeDAO implements IEmployeeDAO
 		
 		return result;
 	}
-	
+
 	// 직위 아이디에 따른 최소 기본급 확인/검색
 	@Override
 	public int getMinBasicPay(String positionId) throws SQLException
 	{
 		int result = 0;
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
-		String sql = "SELECT MINBASICPAY"
-				+ " FROM POSITION"
-				+ " WHERE POSITIONID= ?";
+		String sql = "SELECT MINBASICPAY FROM POSITION WHERE POSITIONID=?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, Integer.parseInt(positionId));			
-		// 오라클에서는 1 이런식으로 아이디가 들어가기 때문에 숫자로 변환해주어야 한다.
-		
+		pstmt.setInt(1, Integer.parseInt(positionId));
 		ResultSet rs = pstmt.executeQuery();
+		
 		while (rs.next())
 			result = rs.getInt("MINBASICPAY");
-			
 		
 		rs.close();
 		pstmt.close();
@@ -210,30 +202,40 @@ public class EmployeeDAO implements IEmployeeDAO
 	public int employeeAdd(Employee employee) throws SQLException
 	{
 		int result = 0;
-
-		Connection conn = datasource.getConnection();
+		
+		Connection conn = dataSource.getConnection();
 		
 		String sql = "INSERT INTO EMPLOYEE"
-				+ "(EMPLOYEEID, NAME, SSN1, SSN2, BIRTHDAY, LUNAR, TELEPHONE"
-				+ ", DEPARTMENTID, POSITIONID, REGIONID, BASICPAY, EXTRAPAY)"
-				+ " VALUES(EMPLOYEESEQ.NEXTVAL"
-				+ ", ?, ?, CRYPTPACK.ENCRYPT(?, ?)"
+				+ "(EMPLOYEEID, NAME, SSN1, SSN2, BIRTHDAY"
+				+ ", LUNAR, TELEPHONE, DEPARTMENTID, POSITIONID, REGIONID" 
+				+ ", BASICPAY, EXTRAPAY)" 
+				+ " VALUES( EMPLOYEESEQ.NEXTVAL"
+				+ ", ?, ?, CRYPTPACK.ENCRYPT(?, ?)" 
 				+ ", TO_DATE(?, 'YYYY-MM-DD'), ?, ?"
-				+ ", ?, ?, ?, ?, ?)";
+				+ ", ?, ?, ?" 
+				+ ", ?, ?)";
+		
+		// name, ssn1, ssn2, ssn2
+		// birthday, lunar, telephone
+		// departmentId, positionId, regionId 
+		// basicPay, extrapay
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, employee.getEmployeeName());
+		pstmt.setString(1, employee.getName());
 		pstmt.setString(2, employee.getSsn1());
 		pstmt.setString(3, employee.getSsn2());
 		pstmt.setString(4, employee.getSsn2());
 		pstmt.setString(5, employee.getBirthday());
 		pstmt.setInt(6, employee.getLunar());
 		pstmt.setString(7, employee.getTelephone());
-		// pstmt.setString(8, employee.getDepartmentId());  
-		// 문자열 정수로 오라클이 변환해줄거지만 우리가 해주는게 더 안정적이지
+		
+		//pstmt.setString(8, employee.getDepartmentId());
 		pstmt.setInt(8, Integer.parseInt(employee.getDepartmentId()));
+		//pstmt.setString(9, employee.getPositionId());
 		pstmt.setInt(9, Integer.parseInt(employee.getPositionId()));
+		//pstmt.setString(10, employee.getRegionId());
 		pstmt.setInt(10, Integer.parseInt(employee.getRegionId()));
+		
 		pstmt.setInt(11, employee.getBasicPay());
 		pstmt.setInt(12, employee.getExtraPay());
 		
@@ -245,15 +247,15 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	// 직원 데이터 삭제
+	// 직원 데이터 삭제 
 	@Override
 	public int remove(String employeeId) throws SQLException
 	{
 		int result = 0;
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
-		String sql = "DELETE FROM EMPLOYEE WHERE EMPLOYEEID=?";
+		String sql = "DELETE FROM EMPLOYEE WHERE EMPLOYEEID = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Integer.parseInt(employeeId));
@@ -266,26 +268,28 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	// 직원 데이터 수정
+	// 직원 데이터 수정 
 	@Override
 	public int modify(Employee employee) throws SQLException
 	{
 		int result = 0;
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
 		String sql = "UPDATE EMPLOYEE"
-				+ " SET NAME=?, BIRTHDAY=TO_DATE(?, 'YYYY-MM-DD')"
-				+ ", LUNAR=?, TELEPHONE=?'"
-				+ ", DEPARTMENTID=?, POSITIONID=?, REGIONID=?"
-				+ ", BASICPAY=?, EXTRAPAY=?"
-				+ ", SSN1 =?, SSN2 =CRYPTPACK.ENCRYPT(?,?)"
+				+ " SET NAME= ?, BIRTHDAY=TO_DATE(?, 'YYYY-MM-DD'), LUNAR = ?"
+				+ ", TELEPHONE=?, DEPARTMENTID=?, POSITIONID=?, REGIONID=?"
+				+ ", BASICPAY=?, EXTRAPAY=?, SSN1=?, SSN2=CRYPTPACK.ENCRYPT(?, ?)"
 				+ " WHERE EMPLOYEEID=?";
 		
-		// grade 는 수정에서 뺌
+		// name, birthday, lunar
+		// telephone, departmentId, positionId, regionId
+		// basicPay, extraPay
+		// ssn1, ssn2, ssn2, grade
+		// employeeId
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, employee.getEmployeeName());
+		pstmt.setString(1, employee.getName());
 		pstmt.setString(2, employee.getBirthday());
 		pstmt.setInt(3, employee.getLunar());
 		pstmt.setString(4, employee.getTelephone());
@@ -311,35 +315,34 @@ public class EmployeeDAO implements IEmployeeDAO
 	@Override
 	public Employee searchId(String employeeId) throws SQLException
 	{
-		Employee result = new Employee();
+		Employee employee = new Employee();
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
-		String sql = "SELECT EMPLOYEEID, NAME, SSN1 "
-				+ ", TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') AS BIRTHDAY, LUNAR "
-				+ ", TELEPHONE, DEPARTMENTID, POSITIONID, REGIONID "
-				+ ", BASICPAY, EXTRAPAY "
-				+ " FROM EMPLOYEE"
-				+ " WHERE EMPLOYEEID = ?";
+		String sql = "SELECT EMPLOYEEID, NAME, SSN1"
+				 + ", TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') AS BIRTHDAY, LUNAR"
+				 + ", TELEPHONE, DEPARTMENT, POSITIONID, REGIONID"
+				 + ", BASICPAY, EXTRAPAY"
+				 + " FROM EMPLOYEE"
+				 + " WHERE EMPLOYEEID=?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Integer.parseInt(employeeId));
-		
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next())
 		{
-			result.setEmployeeId(rs.getString("EMPLOYEEID"));
-			result.setEmployeeName(rs.getString("NAME"));
-			result.setSsn1(rs.getString("SSN1"));
-			result.setBirthday(rs.getString("BIRTHDAY"));
-			result.setLunar(rs.getInt("LUNAR"));
-			result.setTelephone(rs.getString("TELEPHONE"));
-			result.setDepartmentId(rs.getString("DEPARTMENTID"));
-			result.setPositionId(rs.getString("POSITIONID"));
-			result.setRegionId(rs.getString("REGIONID"));
-			result.setBasicPay(rs.getInt("BASICPAY"));
-			result.setExtraPay(rs.getInt("EXTRAPAY"));
+			employee.setEmployeeId(rs.getString("EMPLOYEEID"));
+			employee.setName(rs.getString("NAME"));
+			employee.setSsn1(rs.getString("SSN1"));
+			employee.setBirthday(rs.getString("BIRTHDAY"));
+			employee.setLunar(rs.getInt("LUNAR"));
+			employee.setTelephone(rs.getString("TELEPHONE"));
+			employee.setDepartmentId(rs.getString("DEPARTMENTID"));
+			employee.setPositionId(rs.getString("POSITIONID"));
+			employee.setRegionId(rs.getString("REGIONID"));
+			employee.setBasicPay(rs.getInt("BASICPAY"));
+			employee.setExtraPay(rs.getInt("EXTRAPAY"));
 			
 		}
 		
@@ -347,18 +350,17 @@ public class EmployeeDAO implements IEmployeeDAO
 		pstmt.close();
 		conn.close();
 		
-		return result;
+		return employee;
 	}
 
-	// 일반 직원 로그인
 	@Override
 	public String login(String id, String pw) throws SQLException
 	{
-		String result = null;
+		String result = "";
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
-		String sql ="SELECT NAME"
+		String sql = "SELECT NAME"
 				+ " FROM EMPLOYEE"
 				+ " WHERE EMPLOYEEID=?"
 				+ " AND SSN2=CRYPTPACK.ENCRYPT(?, ?)";
@@ -366,12 +368,13 @@ public class EmployeeDAO implements IEmployeeDAO
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Integer.parseInt(id));
 		pstmt.setString(2, pw);
-		pstmt.setString(2, pw);
+		pstmt.setString(3, pw);
 		
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		
+		while(rs.next())
 			result = rs.getString("NAME");
-
+		
 		rs.close();
 		pstmt.close();
 		conn.close();
@@ -379,13 +382,12 @@ public class EmployeeDAO implements IEmployeeDAO
 		return result;
 	}
 
-	// 관리자 로그인
 	@Override
 	public String logAdmin(String id, String pw) throws SQLException
 	{
-		String result = null;
+		String result = "";
 		
-		Connection conn = datasource.getConnection();
+		Connection conn = dataSource.getConnection();
 		
 		String sql = "SELECT NAME"
 				+ " FROM EMPLOYEE"
@@ -395,19 +397,18 @@ public class EmployeeDAO implements IEmployeeDAO
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Integer.parseInt(id));
-		pstmt.setInt(2, Integer.parseInt(pw));
-		pstmt.setInt(3, Integer.parseInt(pw));
+		pstmt.setString(2, pw);
+		pstmt.setString(3, pw);
 		
 		ResultSet rs = pstmt.executeQuery();
-		while (rs.next())
+		while(rs.next())
 			result = rs.getString("NAME");
-
+		
 		rs.close();
 		pstmt.close();
 		conn.close();
 		
 		return result;
 	}
-	
 
 }

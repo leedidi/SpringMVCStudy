@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -13,13 +14,12 @@
 </head>
 <body>
 
-<!-------------------------------------------------------------------------
-   #15. EmployeeList.jsp
+<!-----------------------------------------------------------------------------
+   #15. EmployeeMenu.jsp
    - 직원 리스트 출력 페이지
    - 관리자가 접근하는 직원 데이터 출력 페이지
-     (일반 직원이 접근하는 직원 데이터 출력 페이지는 EmpList.jsp 로 구성)
----------------------------------------------------------------------------->
-
+     (일반 직원이 접근하는 직원 데이터 출력 페이지는 EmpList.jsp로 구성)
+----------------------------------------------------------------------------->
 
 <div>
 
@@ -27,24 +27,28 @@
 	<div>
 		<c:import url="EmployeeMenu.jsp"></c:import>
 	</div>
-	
+
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
-		
+	
 		<h1>[ 직원 관리 ]</h1>
 		<hr>
 		
 		<div>
-			<form>
-				<input type="button" value="직원 추가" class="btn">
+			<form action="">
+				<input type="button" value="직원 추가" class="btn"
+				 onclick="location.href='employeeinsertform.action'">
+				 <!-- onclick="location.href='EmployeeInsertForm.jsp'"> -->
 			</form>
 		</div>
 		<br><br>
-		<!-----------------------------------------------------
-		EMPLOYEEID NAME SSN BIRTHDAY LUNAR LUNARNAME TELEPHONE
-		DEPARTMENTID DEPARTMENTNAME POSITIONID POSITIONNAME
-		REGIONID REGIONNAME BASICPAY EXTRAPAY PAY GRADE
-		------------------------------------------------------->
+		
+		<!-----------------------------------------------------------
+		 EMPLOYEE NAME SSN BIRTHDAY LUNAR LUNARNAME TELEPHONE
+		 DEPARTMENTID DEPARTMENTNAME POSITIONID POSITIONNAME
+		 REGIONID REGIONNAME BASICPAY EXTRAPAY PAY GRADE
+		 ----------------------------------------------------------->
+		
 		<table id="customers" class="table">
 			<tr>
 				<!-- 항목 15EA -->
@@ -64,7 +68,7 @@
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
-			<!--  
+			<!-- 
 			<tr>
 				<td>1</td>
 				<td>손범석</td>
@@ -82,37 +86,44 @@
 				<td><button type="button" class="btn">수정</button></td>
 				<td><button type="button" class="btn">삭제</button></td>
 			</tr>
-			-->
-						 
-			 <c:forEach var="employee" items="${employeeList }">
-			 <tr>
-			 	<td>${employee.employeeId }</td>
-			 	<td>${employee.employeeName }</td>
-			 	<td>${employee.ssn }-*******</td>
-			 	<td>${employee.birthday }</td>
-			 	<td>${employee.lunarName }</td>
-			 	<td>${employee.telephone }</td>
-			 	<td>${employee.regionName }</td>
-			 	<td>${employee.departmentName }</td>
-			 	<td>${employee.positionName }</td>
-			 	<td>${employee.basicPay }</td>
-			 	<td>${employee.extraPay }</td>
-			 	<td>${employee.pay }</td>
-			 	<td>${employee.grade==0 ? "관리자" : "일반사원" }</td>
-			 	<td><button type="button" class="btn updateBtn">수정</button></td>
-			 	<td><button type="button" class="btn deleteBtn">삭제</button></td>
-			 </tr>
-			 </c:forEach>
-		</table>
-		
+			 -->
+			<c:forEach var="employee" items="${employeeList }">
+			<tr>
+				<td>${employee.employeeId }</td>
+				<td>${employee.name }</td>
+				<td>${employee.ssn }-*******</td>
+				<td>${employee.birthday }</td>
+				<td>${employee.lunarName }</td>
+				<td>${employee.telephone }</td>
+				<td>${employee.regionName }</td>
+				<td>${employee.departmentName }</td>
+				<td>${employee.positionName }</td>
+				
+				<%-- <td>${employee.basicPay }</td> --%>
+				<td><fmt:formatNumber value="${employee.basicPay }"
+				groupingUsed="true"></fmt:formatNumber></td>
+				
+				<%-- <td>${employee.extraPay }</td> --%>
+				<td><fmt:formatNumber value="${employee.extraPay }"
+				groupingUsed="true"></fmt:formatNumber></td>
+				
+				<%-- <td>${employee.pay }</td> --%>
+				<td><fmt:formatNumber value="${employee.pay }"
+				groupingUsed="true"></fmt:formatNumber></td>
+				
+				
+				<td>${employee.grade==0 ? "관리자" : "일반사원" }</td>
+				<td><button type="button" class="btn updateBtn">수정</button></td>
+				<td><button type="button" class="btn deleteBtn">삭제</button></td>
+			</tr>
+			</c:forEach> 
+		</table>		
 	</div>
-	
+
 	<!-- 회사 소개 및 어플리케이션 소개 영역 -->
 	<div id="footer">
-	
 	</div>
-
-
+	
 </div>
 
 

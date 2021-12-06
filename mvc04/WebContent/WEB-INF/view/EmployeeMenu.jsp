@@ -13,35 +13,32 @@
 </head>
 <body>
 
-<!----------------------------
-  #13. EmployeeMenu.jsp
-  - 메인 메뉴 페이지 구성
-  - 로그아웃 기능 포함
------------------------------->
+<!---------------------------
+   #13. EmployeeMenu.jsp
+   - 메인 메뉴 페이지 구성
+   - 로그아웃 기능 포함
+--------------------------->
 
 <div id="menu">
 	<ul>
 		<li>
 			<a href="" class="menu">직원 관리</a>
 		</li>
-		
 		<li>
 			<a href="" class="menu">지역 관리</a>
 		</li>
-		
 		<li>
 			<a href="" class="menu">부서 관리</a>
 		</li>
-		
 		<li>
-			<a href="" class="menu">직위 관리</a>
+			<a href="" class="menu">직원 관리</a>
 		</li>
-		
 		<li>
 			<a href="" class="menu">로그 아웃</a>
 		</li>
 	</ul>
 </div>
+
 
 
 </body>

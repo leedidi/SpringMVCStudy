@@ -1,24 +1,23 @@
-/*============================
-  #1. Employee.java
-  - 직원 데이터 자료형 클래스
- ============================*/
-
+/* ==================================
+   #1. Employee.java
+   - 직원 데이터 자료형 클래스 
+================================== */
 package com.test.mvc;
 
 public class Employee
 {
-	// 주요 속성 구성 → employeeview에 있는 컬럼값들
-	private String employeeId, employeeName, ssn, birthday, lunarName
+	// 주요 속성 구성
+	private String employeeId, name, ssn, birthday, lunarName
 	, telephone, departmentId, departmentName
-	, positionId, positionName, regionId, regionName;
+	, positionId, positionName, regionId, regionName;	
 	
-	private int lunar;						// 양력0, 음력 1
-	private int basicPay, extraPay, pay;
+	private int lunar;						// 양력0, 음력1
+	private int basicPay, extraPay, pay;	
 	
 	private String ssn1, ssn2;				// 주민번호 앞자리, 뒷자리
 	private int grade;						// 관리자0, 일반사원1
 	
-	// getter / setter 구성
+	// getter / setter 구성	
 	public String getEmployeeId()
 	{
 		return employeeId;
@@ -27,13 +26,13 @@ public class Employee
 	{
 		this.employeeId = employeeId;
 	}
-	public String getEmployeeName()
+	public String getName()
 	{
-		return employeeName;
+		return name;
 	}
-	public void setEmployeeName(String employeeName)
+	public void setName(String name)
 	{
-		this.employeeName = employeeName;
+		this.name = name;
 	}
 	public String getSsn()
 	{
@@ -172,7 +171,4 @@ public class Employee
 		this.grade = grade;
 	}
 	
-	
-	
-
 }
