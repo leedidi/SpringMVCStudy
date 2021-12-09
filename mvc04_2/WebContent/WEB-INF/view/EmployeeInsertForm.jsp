@@ -23,6 +23,8 @@
       //@ 캘린더 안나오는데 이유를 모르겠음......ㅠ^ㅠ 다시 해보기!
       // jQuery-UI 캘린더를 불러오는 함수 처리 (datepicker())
       //@ 여기 다시 보기!
+      //@@@
+      
       $("#birthday").datepicker( 
       {      
          dateFormat: "yy-mm-dd"
