@@ -8,6 +8,7 @@ package com.test.mvc;
 public class Department
 {
 	// 주요 속성 구성
+	//@@
 	private String departmentId, departmentName;
 	private int delCheck;							//-- 삭제 가능 여부에 대한 확인
 	//-- 참조되고 있는 경우(1 이상) 삭제 불가능.
