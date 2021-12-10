@@ -11,6 +11,34 @@
 <meta charset="UTF-8">
 <title>EmployeeList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$(function()
+	{
+		// 수정 버튼 클릭
+		$(".updateBtn").click(function()
+		{
+			// 테스트
+			//alert("수정 버튼 클릭");
+			
+			$(location).attr("href", "employeeupdateform.action?employeeId=" + $(this).val())
+			
+		});
+		
+		// 삭제 버튼 클릭
+		$(".deleteBtn").click(function()
+		{
+			// 테스트
+			//alert("삭제 버튼 클릭");
+		});
+	});
+	
+
+</script>
+
+
 </head>
 <body>
 
@@ -113,8 +141,10 @@
 				
 				
 				<td>${employee.grade==0 ? "관리자" : "일반사원" }</td>
-				<td><button type="button" class="btn updateBtn">수정</button></td>
-				<td><button type="button" class="btn deleteBtn">삭제</button></td>
+				<td><button type="button" class="btn updateBtn"
+				value="${employee.employeeId }">수정</button></td>
+				<td><button type="button" class="btn deleteBtn"
+				value="${employee.employeeId }">삭제</button></td>
 			</tr>
 			</c:forEach> 
 		</table>		

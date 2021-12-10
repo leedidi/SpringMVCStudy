@@ -1,7 +1,8 @@
-/* ===========================
+/*===========================
    SampleController.java
    - 사용자 정의 컨트롤러
-=========================== */
+============================*/
+
 package com.test.mvc;
 
 import javax.servlet.http.HttpServletRequest;

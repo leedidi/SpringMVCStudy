@@ -45,7 +45,7 @@
 		<p>이메일을 입력해주세요.</p><br />
 		
 		휴대전화 <input type="tel" placeholder="전화번호 입력"><button>인증번호 받기</button><br />
-		<input type="text" placeholder="인증번호를 입력하세요" />
+		<input type="text" placeholder="인증번호를 입력하세요." />
 		<p>이미 가입했거나, 현재 가입이 불가능한 번호입니다.</p>
 		<p>휴대전화를 입력해주세요.</p>
 		

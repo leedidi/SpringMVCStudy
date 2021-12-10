@@ -42,6 +42,43 @@
     	ajaxRequest();
 	});
       
+      // 직원 추가 버튼이 클릭되었을 때 수행해야 할 코드 처리
+      $("#submitBtn").click(function()
+	{
+		// 데이터 검사(누락된 입력값이 있는지 없는지에 대한 여부 확인)
+		if( $("#name").val()=="" || $("#ssn1").val()=="" || $("#ssn2").val()==""
+				|| $("#birthday").val()=="" || $("#telephone").val()==""
+				|| $("#basicPay").val()=="")
+		{
+			$("#err").html("필수 입력 항목이 누락되었습니다.");
+			$("#err").css("display", "inline");
+			return;					//-- submit 액션 처리 중단
+		}
+		
+		
+		// 테스트
+		//alert($("#minBasicPay").val());		//--( X )
+		//alert($("#minBasicPay").text());		//--( O )
+		
+		// 최소 기본급에 대한 유효성 검사
+		//@ 여기 안나옴^^! 확인해보기 -> ajax에 기본급에 , 나오게 포맷 추가해서 그랬던 거! ajax에서 수정하면 안 된다고 함
+		//if (직급별최소기본급 > 사용자가입력한기본급)
+		if ( parseInt($("#minBasicPay").text()) > parseInt($("#basicPay").val()) )
+		{
+			$("#err").html("입력하신 기본급이 최소 기본급보다 작습니다.");
+			$("#err").css("display", "inline");
+			return;					//-- submit 액션 처리 중단
+		}	
+		
+		
+		
+		// 폼 submit 액션 처리 수행
+		$("#employeeForm").submit();
+		
+		
+	});
+      
+      
    });
    
    
@@ -96,7 +133,7 @@
 		<h1> [ 직원 추가 ] </h1>
 		<hr>
 		
-		<form action="">
+		<form action="employeeinsert.action" method="post" id="employeeForm">
 			<table>
 				<tr>
 					<th>이름</th>

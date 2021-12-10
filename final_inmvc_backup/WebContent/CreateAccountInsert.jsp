@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CreateAccountInsert.jsp</title>
-<link rel="stylesheet" href="<%=cp %>/css/CssCreateAccountInsert.css">
+<link rel="stylesheet" href="<%=cp %>/css/CreateAccountInsert.css">
 <style type="text/css">
 	p 
 	{ 
@@ -22,7 +22,7 @@
 
 	<!-- 메뉴 영역 -->
 	<div>
-	<c:import url="MenuNavbar.jsp"></c:import>
+	<c:import url="MenuNavbar_new.jsp"></c:import>
 	</div>
 
 	<!-- 콘텐츠 영역 -->
@@ -40,7 +40,7 @@
               <tbody>
                 <tr>
                   <th><span>아이디</span></th>
-                  <td><input type="text" class="id" placeholder="ID를 입력하세요."></td>
+                  <td><input type="text" class="id" id="id" placeholder="ID를 입력하세요."></td>
                 </tr>
                 <tr>
                 	<th></th>
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                   <th><span>이름</span></th>
-                  <td><input type="text" class="name" placeholder="이름을 입력하세요."></td>
+                  <td><input type="text" class="name" id="name" placeholder="이름을 입력하세요."></td>
                 </tr>
                 <tr>
                 	<th></th>
@@ -72,7 +72,7 @@
                 </tr>
                 <tr>
                   <th><span>비밀번호 확인</span></th>
-                  <td><input type="text" class="password2" placeholder="비밀번호를 확인하세요"></td>
+                  <td><input type="text" class="password2" placeholder="비밀번호를 확인하세요."></td>
                 </tr>
                  <tr>
                 	<th></th>
@@ -89,7 +89,7 @@
                 </tr>  
                 <tr>
                   <th><span>휴대폰 번호</span></th>
-                  <td><input type="text" placeholder="전화번호를 입력하세요."></td>
+                  <td><input type="text" class="phone" placeholder="전화번호를 입력하세요."></td>
                 </tr>
                 <tr>
                 	<th></th>
