@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>CreateAccountSuccess2.jsp</title>
+    <title>CreateAccountSuccess.jsp</title>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/cover/">
@@ -65,12 +65,10 @@
     <h1 class="cover-heading">회원 가입이 완료되었습니다.</h1>
     <p class="lead">서로의 회원이 되신 것을 환영합니다.</p>
     <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary">메인 페이지로</a>
+      <!-- <a href="#" class="btn btn-lg btn-secondary">메인 페이지로</a> -->
+      <a href="#" class="btn btn-lg btn-primary">메인 페이지로</a>
     </p>
   </main>
-
-
-    
   
 
 </body></html>

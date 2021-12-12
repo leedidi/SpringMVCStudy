@@ -9,9 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>CreateAccountYakgwanView.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+crossorigin="anonymous">
 </head>
 <body>
-
 
 <div>
 	
@@ -25,16 +27,17 @@
 	<div id="content" style="text-align: center;">
 	
 	<form action="">
-	<br><br><br>
+	<br><br><br><br>
 	<h1>회원 약관 동의</h1>
 	<hr>
 		
-		<input type="checkbox" name="checkAll" id="checkAll">
-		<font size="4">모든 이용약관에 동의합니다.</font>
+		<input class="form-check-input" type="checkbox" id="checkAll">
+        <label class="form-check-label" for="checkAll">
+        <font size="4">모든 이용약관에 동의합니다.</font>
+        </label>
 		<br><br>
 		
 		<!-- @ 이용약관 1 -->
-		<!-- @222@ -->
 		<textarea readonly="readonly" name="text1" id="text1" rows="5" cols="66">
 제 1 조 (목적)
 이 약관은 네이버 주식회사 ("회사" 또는 "네이버")가 제공하는 네이버 및 네이버 관련 제반 서비스의 
@@ -59,9 +62,11 @@
 음향ㆍ화상ㆍ동영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 의미합니다. 
 		</textarea>
 		
-		<br>
-   		<input type="checkbox" name="check1" id="check1">
-   		<font size="2">서울사는 솔로 이용약관 동의(필수)</font>
+   		<br>
+        <input class="form-check-input" type="checkbox" id="gridCheck1">
+        <label class="form-check-label" for="gridCheck1">
+        <font size="2">서울사는 솔로 이용약관 동의(필수)</font>
+        </label>
    
    		<!--@ 이용약관 2  -->
    		<br><br>
@@ -76,9 +81,11 @@
 네이버는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
 		</textarea>
 		
-		<br>
-   		<input type="checkbox" name="check2" id="check2">
-   		<font size="2">개인정보 수집 및 이용 동의(필수)</font>
+   		<br>
+        <input class="form-check-input" type="checkbox" id="gridCheck2">
+        <label class="form-check-label" for="gridCheck2">
+        <font size="2">개인정보 수집 및 이용 동의(필수)</font>
+        </label>
 		
 		<!--@ 이용약관 3  -->
    		<br><br>
@@ -92,23 +99,29 @@
 이 약관에 명시되지 않은 사항은 위치정보의 보호 및 이용 등에 관한 법률, 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 전기통신기본법, 전기통신사업법 등 관계법령과 회사의 이용약관 및 개인정보처리방침, 회사가 별도로 정한 지침 등에 의합니다.
 		</textarea>
 		
-		<br>
-   		<input type="checkbox" name="check3" id="check3">
-   		<font size="2">위치정보 이용약관 동의(필수)</font>
+   		<br>
+        <input class="form-check-input" type="checkbox" id="gridCheck3">
+        <label class="form-check-label" for="gridCheck3">
+        <font size="2">위치정보 이용약관 동의(필수)</font>
+        </label>
+   		
    		
    		<!--@ 이용약관 4  -->
    		<br><br>
 		<textarea readonly="readonly" name="text4" id="text4" rows="5" cols="66">
-		네이버에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(네이버앱 알림 또는 문자), 이메일로 받아보실 수 있습니다. 일부 서비스(별도 회원 체계로 운영하거나 네이버 가입 이후 추가 가입하여 이용하는 서비스 등)의 경우, 개별 서비스에 대해 별도 수신 동의를 받을 수 있으며, 이때에도 수신 동의에 대해 별도로 안내하고 동의를 받습니다.
+네이버에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(네이버앱 알림 또는 문자), 이메일로 받아보실 수 있습니다. 일부 서비스(별도 회원 체계로 운영하거나 네이버 가입 이후 추가 가입하여 이용하는 서비스 등)의 경우, 개별 서비스에 대해 별도 수신 동의를 받을 수 있으며, 이때에도 수신 동의에 대해 별도로 안내하고 동의를 받습니다.
 		</textarea>
 		
-		<br>
-   		<input type="checkbox" name="check4" id="check3">
-   		<font size="2">프로모션 정보 수신 동의(선택)</font>
+   		<br>
+        <input class="form-check-input" type="checkbox" id="gridCheck4">
+        <label class="form-check-label" for="gridCheck4">
+        <font size="2">프로모션 정보 수신 동의(선택)</font>
+        </label>
 		
 		<br><br>
-		<button type="submit" class="btn" >취소</button>
-		<button type="submit" class="btn">확인</button>
+		<button type="submit" class="btn btn-secondary">취소하기</button>
+		<button type="submit" class="btn btn-primary">확인하기</button>
+		<br><br>
 		</form>
 		</div>
 			

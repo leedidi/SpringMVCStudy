@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <title>CreateAccountInsert.jsp</title>
 <link rel="stylesheet" href="<%=cp %>/css/CreateAccountInsert.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+crossorigin="anonymous">
 <style type="text/css">
 	p 
 	{ 
@@ -26,11 +29,14 @@
 	</div>
 
 	<!-- 콘텐츠 영역 -->
-<div class="wrap wd668">
-      <div class="container">
+	<div class="wrap wd668">
+	<!-- <div class="container" style="width:50%; text-align: left;"> -->
         <div class="form_txtInput">
+        <br>
           <h2 class="sub_tit_txt">회원가입</h2>
+          <hr>
           <p class="exTxt">회원가입 시 핸드폰 인증을 진행하셔야 합니다.</p>
+          
           <div class="join_form">
             <table>
               <colgroup>
@@ -60,7 +66,7 @@
                 </tr>
                 <tr>
                 	<th></th>
-                	<td><p>사용할 수 없는 닉네임입니다.</p><p>닉네임을 입력해주세요.</p><br /></td>
+                	<td><p>사용할 수 없는 닉네임입니다.</p><p>닉네임을 입력해주세요.</p></td>
                 </tr>
                 <tr>
                   <th><span>비밀번호</span></th>
@@ -71,12 +77,12 @@
                 	<td><p>비밀번호를 입력해주세요.</p></td>
                 </tr>
                 <tr>
-                  <th><span>비밀번호 확인</span></th>
+                  <th><span>번호확인</span></th>
                   <td><input type="text" class="password2" placeholder="비밀번호를 확인하세요."></td>
                 </tr>
                  <tr>
                 	<th></th>
-                	<td><p>비밀번호 확인을 입력해주세요.</p></td>
+                	<td><p>비밀번호를 확인해주세요.</p></td>
                 </tr>
                 <tr class="email">
                   <th><span>이메일</span></th>
@@ -97,17 +103,17 @@
 						<p>휴대전화를 입력해주세요.</p></td>
                 </tr>  
                 <tr>
-                  <th><span>인증번호 확인</span></th>
-                  <td><input type="text" class="send_number" placeholder="인증번호를 입력하세요">
-                     <button type="submit" class="btn" id="btn">인증번호 발송</button><br>
+                  <th><span>인증번호</span></th>
+                  <td><input type="text" class="send_number" placeholder="인증번호를 입력하세요.">
+                      <button type="button" class="btn btn-secondary"><font size="2.5">인증번호 발송</font></button>
                   </td>
                 </tr>
                 <tr>
                   <th><span>주소</span></th>
                   <td><input type="text" class="upun" readonly="readonly" placeholder="우편번호">
-                   <button type="submit" class="btn" id="btn">우편번호 검색</button><br>
+                    <button type="button" class="btn btn-secondary"><font size="2.5">우편번호 검색</font></button>
 		<input type="text" class="address" readonly="readonly" placeholder="주소"></input>
-		<input type="text" class="detailaddress" placeholder="상세주소 입력"></input></td>
+		<input type="text" class="detailaddress" placeholder="상세주소를 입력해주세요."></input></td>
                 </tr>
                 <tr>
                 	<th></th>
@@ -117,10 +123,13 @@
               </tbody>
             </table>
             <div class="exform_txt"><span>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</span></div>
+           
           </div><!-- join_form E  -->
           <div class="btn_wrap">
-            <button type="submit" class="btn" id="btn">가입하기</button>
+            <button type="button" class="btn btn-secondary">취소하기</button>
+			<button type="button" class="btn btn-primary">가입하기</button>
           </div>
+          <br>
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->
     </div> <!-- container E -->
