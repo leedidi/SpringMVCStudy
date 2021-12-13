@@ -61,6 +61,21 @@ public class EmployeeUpdateFormController implements Controller
 			
 			Employee employee = new Employee();
 			
+			employee = employeeDAO.searchId(employeeId);
+			
+			regionList = regionDAO.list();
+			departmentList = departmentDAO.list();
+			positionList = positionDAO.list();
+			
+			//@ 값 넘겨줄 객체 구성
+			//@ employee란 이름으로 employee 넘겨줌
+			mav.addObject("employee", employee);
+			mav.addObject("regionList", regionList);
+			mav.addObject("departmentList", departmentList);
+			mav.addObject("positionList", positionList);
+			
+			mav.setViewName("/WEB-INF/view/EmployeeUpdateForm.jsp");
+			
 		} catch (Exception e)
 		{
 			System.out.println(e.toString());
@@ -71,3 +86,10 @@ public class EmployeeUpdateFormController implements Controller
 	}
 
 }
+
+
+
+
+
+
+

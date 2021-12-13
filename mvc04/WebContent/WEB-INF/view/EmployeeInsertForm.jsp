@@ -162,7 +162,7 @@
 						<input type="radio" value="0" name="lunar" id="lunar0" checked="checked">
 						<label for="lunar0">양력</label>
 						<input type="radio" value="1" name="lunar" id="lunar1">
-						<label for="lunar1">양력</label>
+						<label for="lunar1">음력</label>
 					</td>
 				</tr>
 				<tr>
@@ -236,7 +236,8 @@
 						<button type="button" class="btn" id="submitBtn"
 						style="width: 40%;">직원 추가</button>
 						<button type="button" class="btn" id="listBtn"
-						style="width: 40%;">직원 리스트</button>
+						style="width: 40%;"
+						onclick="location.href='employeelist.action'">직원 리스트</button>
 						<br><br>
 						<span id="err" style="color: red; font-weight: bold; display: none;"></span>
 					</td>

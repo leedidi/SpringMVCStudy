@@ -28,34 +28,33 @@ public class PositionDAO implements IPositionDAO
 
 	@Override
 	public ArrayList<Position> list() throws SQLException
-	{
-		ArrayList<Position> result = new ArrayList<Position>();
-		
-		Connection conn = dataSource.getConnection();
-		
-		String sql = "SELECT POSITIONID, POSITIONNAME, MINBASICPAY, DELCHECK"
-				   + " FROM POSITIONVIEW ORDER BY POSITIONID";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next())
-		{
-			Position pos = new Position();
-			pos.setPositionId(rs.getString("POSITIONID"));
-			pos.setPositionName(rs.getString("POSITIONNAME"));
-			pos.setMinBasicPay(rs.getInt("MINBASICPAY"));
-			pos.setDelCheck(rs.getInt("DELCHECK"));
-			
-			result.add(pos);
-		}
-		
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		return result;
-	}
+   {
+      Connection conn = dataSource.getConnection();
+      
+      ArrayList<Position> result = new ArrayList<Position>();
+      String sql = "SELECT POSITIONID, POSITIONNAME, MINBASICPAY, DELCHECK"
+               + " FROM POSITIONVIEW"
+               + " ORDER BY POSITIONID";
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      ResultSet rs = pstmt.executeQuery();
+      
+      while(rs.next())
+      {
+         Position position = new Position();
+         position.setPositionId(rs.getString("POSITIONID"));
+         position.setPositionName(rs.getString("POSITIONNAME"));
+         position.setMinBasicPay(rs.getInt("MINBASICPAY"));
+         position.setDelCheck(rs.getInt("DELCHECK"));
+      
+         result.add(position);
+      }
+      
+      rs.close();
+      pstmt.close();
+      conn.close();
+      
+      return result;
+   }
 
 	@Override
 	public int add(Position position) throws SQLException

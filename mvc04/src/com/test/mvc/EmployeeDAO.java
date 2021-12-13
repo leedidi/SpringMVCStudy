@@ -270,46 +270,35 @@ public class EmployeeDAO implements IEmployeeDAO
 
 	// 직원 데이터 수정 
 	@Override
-	public int modify(Employee employee) throws SQLException
-	{
-		int result = 0;
-		
-		Connection conn = dataSource.getConnection();
-		
-		String sql = "UPDATE EMPLOYEE"
-				+ " SET NAME= ?, BIRTHDAY=TO_DATE(?, 'YYYY-MM-DD'), LUNAR = ?"
-				+ ", TELEPHONE=?, DEPARTMENTID=?, POSITIONID=?, REGIONID=?"
-				+ ", BASICPAY=?, EXTRAPAY=?, SSN1=?, SSN2=CRYPTPACK.ENCRYPT(?, ?)"
-				+ " WHERE EMPLOYEEID=?";
-		
-		// name, birthday, lunar
-		// telephone, departmentId, positionId, regionId
-		// basicPay, extraPay
-		// ssn1, ssn2, ssn2, grade
-		// employeeId
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, employee.getName());
-		pstmt.setString(2, employee.getBirthday());
-		pstmt.setInt(3, employee.getLunar());
-		pstmt.setString(4, employee.getTelephone());
-		pstmt.setInt(5, Integer.parseInt(employee.getDepartmentId()));
-		pstmt.setInt(6, Integer.parseInt(employee.getPositionId()));
-		pstmt.setInt(7, Integer.parseInt(employee.getRegionId()));
-		pstmt.setInt(8, employee.getBasicPay());
-		pstmt.setInt(9, employee.getExtraPay());
-		pstmt.setString(10, employee.getSsn1());
-		pstmt.setString(11, employee.getSsn2());
-		pstmt.setString(12, employee.getSsn2());
-		pstmt.setInt(13, Integer.parseInt(employee.getEmployeeId()));
-		
-		result = pstmt.executeUpdate();
-		
-		pstmt.close();
-		conn.close();
-		
-		return result;
-	}
+   public int modify(Employee employee) throws SQLException
+   {
+      int result=0;
+      
+      String sql="UPDATE EMPLOYEE SET NAME=?, BIRTHDAY=TO_DATE(?, 'YYYY-MM-DD'), LUNAR=?, TELEPHONE=?"
+            + ", DEPARTMENTID=?, POSITIONID=?, REGIONID=?, BASICPAY=?, EXTRAPAY=?"
+            + ", SSN1=?, SSN2=CRYPTPACK.ENCRYPT(?, ?) WHERE EMPLOYEEID=?";
+      Connection conn = dataSource.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, employee.getName());
+      pstmt.setString(2, employee.getBirthday());
+      pstmt.setInt(3, employee.getLunar());
+      pstmt.setString(4, employee.getTelephone());
+      pstmt.setInt(5, Integer.parseInt(employee.getDepartmentId()));
+      pstmt.setInt(6, Integer.parseInt(employee.getPositionId()));
+      pstmt.setInt(7, Integer.parseInt(employee.getRegionId()));
+      pstmt.setInt(8, employee.getBasicPay());
+      pstmt.setInt(9, employee.getExtraPay());
+      pstmt.setString(10, employee.getSsn1());
+      pstmt.setString(11, employee.getSsn2());
+      pstmt.setString(12, employee.getSsn2());
+      pstmt.setInt(13, Integer.parseInt(employee.getEmployeeId()));
+      result = pstmt.executeUpdate();
+      
+      pstmt.close();
+      conn.close();
+      
+      return result;
+   }
 
 	// 아이디로 직원 검색
 	@Override
@@ -321,7 +310,7 @@ public class EmployeeDAO implements IEmployeeDAO
 		
 		String sql = "SELECT EMPLOYEEID, NAME, SSN1"
 				 + ", TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') AS BIRTHDAY, LUNAR"
-				 + ", TELEPHONE, DEPARTMENT, POSITIONID, REGIONID"
+				 + ", TELEPHONE, DEPARTMENTID, POSITIONID, REGIONID"
 				 + ", BASICPAY, EXTRAPAY"
 				 + " FROM EMPLOYEE"
 				 + " WHERE EMPLOYEEID=?";

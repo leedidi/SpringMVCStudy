@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EmployeeList.jsp</title>
+<title>RegionList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -48,10 +48,9 @@
 <body>
 
 <!-----------------------------------------------------------------------------
-   #15. EmployeeMenu.jsp
-   - 직원 리스트 출력 페이지
-   - 관리자가 접근하는 직원 데이터 출력 페이지
-     (일반 직원이 접근하는 직원 데이터 출력 페이지는 EmpList.jsp로 구성)
+   #15. RegionList.jsp
+   - 지역 리스트 출력 페이지
+   - 관리자가 접근하는 지역 데이터 출력 페이지
 ----------------------------------------------------------------------------->
 
 <div>
@@ -64,12 +63,12 @@
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
 	
-		<h1>[ 직원 관리 ]</h1>
+		<h1>[ 지역 관리 ]</h1>
 		<hr>
 		
 		<div>
 			<form action="">
-				<input type="button" value="직원 추가" class="btn"
+				<input type="button" value="지역 추가" class="btn"
 				 onclick="location.href='employeeinsertform.action'">
 				 <!-- onclick="location.href='EmployeeInsertForm.jsp'"> -->
 			</form>

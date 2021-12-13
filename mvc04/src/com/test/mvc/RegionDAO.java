@@ -28,33 +28,32 @@ public class RegionDAO implements IRegionDAO
 
 	@Override
 	public ArrayList<Region> list() throws SQLException
-	{
-		ArrayList<Region> result = new ArrayList<Region>();
-		
-		Connection conn = dataSource.getConnection();
-		
-		String sql = "SELECT REGIONID, REGIONNAME, DELCHECK"
-				+ " FROM REGIONVIEW ORDER BY REGIONID";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next())
-		{
-			Region reg = new Region();
-			reg.setRegionId(rs.getString("REGIONID"));
-			reg.setRegionName(rs.getString("REGIONNAME"));
-			reg.setDelCheck(rs.getInt("DELCHECK"));
-			
-			result.add(reg);
-		}
-		
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		return result;
-	}
+   {
+      Connection conn = dataSource.getConnection();
+      
+      ArrayList<Region> result = new ArrayList<Region>();
+      String sql = "SELECT REGIONID, REGIONNAME, DELCHECK"
+               + " FROM REGIONVIEW"
+               + " ORDER BY REGIONID";
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      ResultSet rs = pstmt.executeQuery();
+      
+      while(rs.next())
+      {
+         Region region = new Region();
+         region.setRegionId(rs.getString("REGIONID"));
+         region.setRegionName(rs.getString("REGIONNAME"));
+         region.setDelCheck(rs.getInt("DELCHECK"));
+         
+         result.add(region);
+      }
+      
+      rs.close();
+      pstmt.close();
+      conn.close();
+      
+      return result;
+   }
 
 	@Override
 	public int add(Region region) throws SQLException
