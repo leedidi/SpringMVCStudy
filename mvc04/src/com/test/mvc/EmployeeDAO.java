@@ -345,7 +345,7 @@ public class EmployeeDAO implements IEmployeeDAO
 	@Override
 	public String login(String id, String pw) throws SQLException
 	{
-		String result = "";
+		String result = null;
 		
 		Connection conn = dataSource.getConnection();
 		
@@ -374,7 +374,7 @@ public class EmployeeDAO implements IEmployeeDAO
 	@Override
 	public String logAdmin(String id, String pw) throws SQLException
 	{
-		String result = "";
+		String result = null;
 		
 		Connection conn = dataSource.getConnection();
 		

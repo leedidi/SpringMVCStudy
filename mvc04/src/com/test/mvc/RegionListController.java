@@ -1,12 +1,11 @@
-/*====================================================
-   #22. AjaxController.java
+/*===========================
+   RegionListController.java
    - 사용자 정의 컨트롤러
-   - 직위에 따른 최소 기본급 반환
-   - DAO 객체에 대한 의존성 주입(DI)을 위한 준비
-     → 인터페이스 형태의 자료형을 속성으로 구성
-     → setter 메소드 구성
-====================================================*/
+============================*/
+
 package com.test.mvc;
+
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,18 +14,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-public class AjaxController implements Controller
+public class RegionListController implements Controller
 {
-	// 인터페이스 형태의 속성 구성
-	private IEmployeeDAO dao;
-	
+	// 주요 속성 구성
+	// → 인터페이스
+	private IRegionDAO dao;
+			
 	// setter 구성
-	public void setDao(IEmployeeDAO dao)
+	public void setDao(IRegionDAO dao)
 	{
 		this.dao = dao;
 	}
-	
-	
+
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
@@ -48,22 +47,16 @@ public class AjaxController implements Controller
 			//   일반 직원으로 로그인 되어 있는 상황이므로
 			//   로그아웃 액션 처리하여 다시 관리자로 로그인할 수 있도록 처리
 		}
-		
 		// ----------------------------------------------------------------------- 세션 처리 과정 추가
 		
-		
-		// 데이터 수신 (→ EmployeeInsertForm.jsp 로 부터... positionId 수신)
-		String positionId = request.getParameter("positionId");
-		
-		int result = 0;
+		ArrayList<Region> regionList = new ArrayList<Region>();
 		
 		try
 		{
-			result = dao.getMinBasicPay(positionId);
+			regionList = dao.list();
 			
-			mav.addObject("result", result);
-			
-			mav.setViewName("/WEB-INF/view/Ajax.jsp");
+			mav.addObject("regionList", regionList);
+			mav.setViewName("/WEB-INF/view/RegionList.jsp");
 			
 		} catch (Exception e)
 		{
