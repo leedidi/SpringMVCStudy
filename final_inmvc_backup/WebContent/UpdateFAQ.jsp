@@ -17,21 +17,9 @@ String cp = request.getContextPath();
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
-<title>WriteDefaul.jsp</title>
+<title>UpdateFAQ.jsp</title>
 <script>
-$(document).on('click', '#btnSave', function(e)
-		{
-			e.preventDefault();
-			$("#form").submit();
 
-		});
-
-		$(document).on('click', '#btnList', function(e)
-		{
-			e.preventDefault();
-			location.href = "${pageContext.request.contextPath}/board/getBoardList";
-
-		});
 </script>
 <style>
 body {
@@ -52,34 +40,33 @@ body {
 	<br>
 	<article>
 		<div class="container" role="main">
-			<h2>공지사항 작성</h2>
+			<h2>자주 묻는 질문</h2>
 			<br>
 			<form name="form" id="form" role="form" method="post"
 				action="${pageContext.request.contextPath}/board/saveBoard">
 				<div class="mb-3">
 					<label for="title">제목</label> <input type="text"
-						class="form-control" name="title" id="title"
-						placeholder="제목을 입력하세요">
-				</div>
-
-				<div class="mb-3">
-					<label for="reg_id">작성자</label> <input type="text"
-						class="form-control" name="reg_id" id="reg_id"
-						placeholder="이름을 입력하세요">
+						class="form-control" name="title" id="title" value="스티커 기능은 뭔가요?"
+						>
 				</div>
 
 				<div class="mb-3">
 					<label for="reg_id">분류</label> <select class="form-control">
 						<option>========</option>
-						<option>공지사항</option>
-						<option>점검알림</option>
+						<option>회원 관리</option>
+						<option>체크리스트</option>
+						<option>공동구매</option>
+						<option>기타</option>
 					</select>
 				</div>
 
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="10" name="content" id="content"
-						placeholder="내용을 입력하세요"></textarea>
+					<textarea class="form-control" rows="13" name="content" id="content"
+						>내가 북마크 해 놓은 체크리스트에 내가 표시하고 싶은 단어를 스티커처럼 붙일 수 있습니다.
+한 번 만들어 놓은 스티커는 내 체크리스트에서 확인 가능하며, 다른 북마크한 체크리스트에 사용 할 수 있습니다.
+또한, 내 체크리스트에서 특정 스티커가 사용 된 체크리스트들을 확인할 수 있습니다.
+						</textarea>
 				</div>
 
 			</form>
@@ -88,7 +75,7 @@ body {
 			<div align="right">
 				<!-- <button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
 				<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button> -->
-				<button class="btn btn-primary" type="submit">등록하기</button>
+				<button class="btn btn-primary" type="submit">수정하기</button>
 				<button class="btn btn-primary" type="submit">취소하기</button>
 			</div>
 

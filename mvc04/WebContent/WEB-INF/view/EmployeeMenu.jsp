@@ -31,7 +31,7 @@
 			<a href="departmentlist.action" class="menu">부서 관리</a>
 		</li>
 		<li>
-			<a href="positionlist.action" class="menu">직원 관리</a>
+			<a href="positionlist.action" class="menu">직위 관리</a>
 		</li>
 		<li>
 			<a href="logout.action" class="menu">로그 아웃</a>

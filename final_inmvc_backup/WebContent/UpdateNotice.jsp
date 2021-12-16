@@ -17,21 +17,9 @@ String cp = request.getContextPath();
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
-<title>WriteDefaul.jsp</title>
+<title>WriteNotice.jsp</title>
 <script>
-$(document).on('click', '#btnSave', function(e)
-		{
-			e.preventDefault();
-			$("#form").submit();
 
-		});
-
-		$(document).on('click', '#btnList', function(e)
-		{
-			e.preventDefault();
-			location.href = "${pageContext.request.contextPath}/board/getBoardList";
-
-		});
 </script>
 <style>
 body {
@@ -52,20 +40,14 @@ body {
 	<br>
 	<article>
 		<div class="container" role="main">
-			<h2>공지사항 작성</h2>
+			<h2>공지사항</h2>
 			<br>
 			<form name="form" id="form" role="form" method="post"
 				action="${pageContext.request.contextPath}/board/saveBoard">
 				<div class="mb-3">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
-						placeholder="제목을 입력하세요">
-				</div>
-
-				<div class="mb-3">
-					<label for="reg_id">작성자</label> <input type="text"
-						class="form-control" name="reg_id" id="reg_id"
-						placeholder="이름을 입력하세요">
+						value="2021-11-20 추가 점검 예정 알림">
 				</div>
 
 				<div class="mb-3">
@@ -78,8 +60,10 @@ body {
 
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="10" name="content" id="content"
-						placeholder="내용을 입력하세요"></textarea>
+					<textarea class="form-control" rows="13" name="content" id="content"
+					>추가 점검 예정일을 알려드립니다. 
+일시: 2021-11-20
+					</textarea>
 				</div>
 
 			</form>

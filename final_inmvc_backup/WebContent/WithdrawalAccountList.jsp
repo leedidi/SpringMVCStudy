@@ -25,7 +25,7 @@ String cp = request.getContextPath();
 
 	<!-- 메뉴 영역 -->
 	<div>
-		<c:import url="MenuNavbar_new.jsp"></c:import>
+		<c:import url="MenuNavbar_admin.jsp"></c:import>
 	</div>
 
 	<!-- 콘텐츠 영역 -->
@@ -52,6 +52,7 @@ String cp = request.getContextPath();
 				<div class="col-md">
 					<form>
 						<!-- Search -->
+						<!-- dataSearch 회원 검색부분은 일단 킵! 기능구현 안하면 없애기 -->
 						<div class="input-group input-group-merge input-group-flush">
 							<div class="input-group-prepend">
 								<div class="input-group-text">
@@ -117,17 +118,21 @@ String cp = request.getContextPath();
 						<th class="sorting" tabindex="0" aria-controls="datatable"
 							rowspan="1" colspan="1"
 							aria-label="Signed up: activate to sort column ascending"
-							style="width: 146.771px;">가입일</th>
+							style="width: 146.771px;">탈퇴일시</th>
+						<th class="sorting" tabindex="0" aria-controls="datatable"
+							rowspan="1" colspan="1"
+							aria-label="Signed up: activate to sort column ascending"
+							style="width: 146.771px;">탈퇴사유</th>
 						<th class="sorting" tabindex="0" aria-controls="datatable"
 							rowspan="1" colspan="1"
 							aria-label="User ID: activate to sort column ascending"
-							style="width: 111.365px;">계정고유번호</th>
+							style="width: 111.365px;">탈퇴번호</th>
 					</tr>
 				</thead>
 				<tbody>
 
 
-					<!-- 한 페이지당 10개 조회 가능 -->
+					<!-- 한 페이지당 10개 계정 정보 조회 가능 -->
 					<tr role="row" class="odd">
 						<td class="table-column-pr-0"></td>
 						<!-- * -->
@@ -139,7 +144,8 @@ String cp = request.getContextPath();
 						<td>superman</td>
 						<td>김길동</td>
 						<td>superman@example.com</td>
-						<td>2012/12/01</td>
+						<td>2021/12/01</td>
+						<td>콘텐츠 내용 부족</td>
 						<td>67989</td>
 					</tr>
 
@@ -154,7 +160,8 @@ String cp = request.getContextPath();
 						<td>batman</td>
 						<td>임하나</td>
 						<td>batman@example.com</td>
-						<td>2010/01/11</td>
+						<td>2018/01/11</td>
+						<td>시스템 장애</td>
 						<td>67326</td>
 					</tr>
 					<tr role="row" class="odd">
@@ -167,7 +174,8 @@ String cp = request.getContextPath();
 						<td>ironman</td>
 						<td>김미미</td>
 						<td>mimimi@example.com</td>
-						<td>1999/09/11</td>
+						<td>2002/09/11</td>
+						<td>기타</td>
 						<td>55821</td>
 					</tr>
 					<tr role="row" class="even">
@@ -181,6 +189,7 @@ String cp = request.getContextPath();
 						<td>김큰손</td>
 						<td>bighand@example.com</td>
 						<td>2011/03/22</td>
+						<td>콘텐츠 내용 부족</td>
 						<td>85214</td>
 					</tr>
 					<tr role="row" class="odd">
@@ -193,7 +202,8 @@ String cp = request.getContextPath();
 						<td>Smallman</td>
 						<td>김작손</td>
 						<td>smallman@example.com</td>
-						<td>2009/10/10</td>
+						<td>2009/10/12</td>
+						<td>개인정보 노출 우려</td>
 						<td>75470</td>
 					</tr>
 					<tr role="row" class="even">
@@ -206,7 +216,8 @@ String cp = request.getContextPath();
 						<td>happyman</td>
 						<td>이행복</td>
 						<td>happyman@example.com</td>
-						<td>2008/07/31</td>
+						<td>2021/08/31</td>
+						<td>기타</td>
 						<td>37534</td>
 					</tr>
 					<tr role="row" class="odd">
@@ -219,7 +230,8 @@ String cp = request.getContextPath();
 						<td>smileman</td>
 						<td>이웃음</td>
 						<td>smileman@example.com</td>
-						<td>2021/10/31</td>
+						<td>2021/11/31</td>
+						<td>시스템 장애</td>
 						<td>31233</td>
 					</tr>
 					<tr role="row" class="even">
@@ -232,7 +244,8 @@ String cp = request.getContextPath();
 						<td>dogman</td>
 						<td>이강쥐</td>
 						<td>dogman@example.com</td>
-						<td>2009/03/31</td>
+						<td>2021/03/31</td>
+						<td>콘텐츠 내용 부족</td>
 						<td>11200</td>
 					</tr>
 					<tr role="row" class="odd">
@@ -245,8 +258,23 @@ String cp = request.getContextPath();
 						<td>catman</td>
 						<td>이고양</td>
 						<td>catman@example.com</td>
-						<td>2009/03/31</td>
+						<td>2013/03/31</td>
+						<td>시스템 장애</td>
 						<td>11199</td>
+					</tr>
+					<tr role="row" class="even">
+						<td class="table-column-pr-0"></td>
+						<td class="table-column-pl-0"><a>
+								<div class="media-body">
+									<span class="h5 text-hover-primary mb-0">sheep33</span>
+								</div>
+						</a></td>
+						<td>sheepman</td>
+						<td>이양양</td>
+						<td>sheepman@example.com</td>
+						<td>2021/03/31</td>
+						<td>개인정보 노출 우려</td>
+						<td>11399</td>
 					</tr>
 					<!-- @@@ 프로필 조회 가능 버전
                 <tr role="row" class="even">
@@ -309,9 +337,10 @@ String cp = request.getContextPath();
 					</nav>
 				</div>
 			</div>
-		</div>
+		</div>		
 		<!-- End Pagination -->
 	</div>
+	<br><br>
 
 </body>
 </html>
