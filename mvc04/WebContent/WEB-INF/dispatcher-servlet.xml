@@ -102,8 +102,28 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
    		<property name="dao" ref="regionDAO"></property>
    </bean>
    
-	 
+   <bean name="/regionupdateform.action" class="com.test.mvc.RegionUpdateFormController">
+		<property name="regionDAO" ref="regionDAO"></property>
+	</bean>	
+		
+	<bean name="/regionupdate.action" class="com.test.mvc.RegionUpdateController">
+		<property name="dao" ref="regionDAO"></property>
+	</bean>	
+	
+	<bean name="/regiondelete.action" class="com.test.mvc.RegionDeleteController">
+      <property name="dao" ref="regionDAO"></property>
+   </bean>
+   
+   <bean name="/reglist.action" class="com.test.mvc.RegListController">
+   		<property name="dao" ref="regionDAO"></property>
+   </bean>
+   	
+   	 
    <!-- Department 관련 Controller 등록 -->
+   <bean name="/departmentlist.action" class="com.test.mvc.DepartmentListController">
+   		<property name="dao" ref="departmentDAO"></property>
+   </bean>
+   
    
    <!-- Position 관련 Controller 등록 -->
 	 

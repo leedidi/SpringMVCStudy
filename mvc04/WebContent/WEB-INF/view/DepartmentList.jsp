@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RegionList.jsp</title>
+<title>DepartmentList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -23,7 +23,7 @@
 			// 테스트
 			//alert("수정 버튼 클릭");
 			
-			$(location).attr("href", "regionupdateform.action?regionId=" + $(this).val());
+			$(location).attr("href", "departmentupdateform.action?regionId=" + $(this).val());
 			
 		});
 		
@@ -35,7 +35,7 @@
 			
 			if (confirm("현재 선택한 데이터를 정말 삭제하시겠습니까?"))
 			{
-				$(location).attr("href", "regiondelete.action?regionId=" + $(this).val());
+				$(location).attr("href", "departmentdelete.action?regionId=" + $(this).val());
 			}
 		});
 	});
@@ -48,9 +48,9 @@
 <body>
 
 <!-----------------------------------------------------------------------------
-   #15. RegionList.jsp
-   - 지역 리스트 출력 페이지
-   - 관리자가 접근하는 지역 데이터 출력 페이지
+   #15. DepartmentList.jsp
+   - 부서 리스트 출력 페이지
+   - 관리자가 접근하는 부서 데이터 출력 페이지
 ----------------------------------------------------------------------------->
 
 <div>
@@ -63,38 +63,36 @@
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
 	
-		<h1>[ 지역 관리 ]</h1>
+		<h1>[ 부서 관리 ]</h1>
 		<hr>
 		
 		<div>
 			<form action="">
-				<input type="button" value="지역 추가" class="btn"
-				 onclick="location.href='regioninsertform.action'">
+				<input type="button" value="부서 추가" class="btn"
+				 onclick="location.href='departmentinsertform.action'">
 			</form>
 		</div>
 		<br><br>
 		<table id="customers" class="table">
 			<tr>
 				<!-- 항목 15EA -->
-				<th>지역 번호</th>
-				<th>지역 이름</th>
+				<th>부서 번호</th>
+				<th>부서 이름</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 			<tr>
-			<c:forEach var="region" items="${regionList }">
+			<c:forEach var="department" items="${departmentList }">
 			<tr>
-				<td>${region.regionId }</td>
-				<td>${region.regionName }</td>				
+				<td>${department.departmentId }</td>
+				<td>${department.departmentName }</td>				
 				
 				<td><button type="button" class="btn updateBtn"
-				value="${region.regionId }">수정</button></td>
+				value="${department.departmentId }">수정</button></td>
 				<td><button type="button" class="btn deleteBtn"
-				value="${region.regionId }">삭제</button></td>
-				 
-				 <!-- <td>1</td>
-				 <td>제주</td> -->
-			</tr>
+				value="${department.departmentId }">삭제</button></td>
+
+			</tr> 
 			</c:forEach> 
 			 
 		</table>		
