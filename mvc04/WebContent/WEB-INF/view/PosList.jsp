@@ -9,19 +9,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RegList.jsp</title>
+<title>PosList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+
 </head>
 <body>
 
 <!-----------------------------------------------------------------------------
-   #15. RegList.jsp
-   - 지역 리스트 출력 페이지
-   - 사용자가 접근하는 지역 데이터 출력 페이지
+   #??. PosList.jsp
+   - 직위 리스트 출력 페이지
+   - 관리자가 접근하는 지역 데이터 출력 페이지
 ----------------------------------------------------------------------------->
 
 <div>
-
 	<!-- 메뉴 영역 -->
 	<div>
 		<c:import url="EmpMenu.jsp"></c:import>
@@ -30,22 +33,23 @@
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
 	
-		<h1>[ 지역 리스트 ]</h1>
+		<h1>[ 직위 리스트 ]</h1>
 		<hr>
 		
 		<br><br>
 		<table id="customers" class="table">
 			<tr>
 				<!-- 항목 15EA -->
-				<th>지역 번호</th>
-				<th>지역 이름</th>
+				<th>직위 번호</th>
+				<th>직위 이름</th>
+				<th>직위별 최소수당</th>
 			</tr>
 			<tr>
-			<c:forEach var="region" items="${regionList }">
+			<c:forEach var="position" items="${positionList }">
 			<tr>
-				<td>${region.regionId }</td>
-				<td>${region.regionName }</td>				
-
+				<td>${position.positionId }</td>
+				<td>${position.positionName }</td>				
+				<td>${position.minBasicPay }</td>				
 			</tr>
 			</c:forEach> 
 			 

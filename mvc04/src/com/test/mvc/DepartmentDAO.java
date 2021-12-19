@@ -5,7 +5,8 @@
    - Connection 객체에 대한 의존성 주입을 위한 준비 
      → 인터페이스 형태의 속성 구성(DataSource)
      → setter 메소드 정의
-==================================================== */
+====================================================*/
+
 package com.test.mvc;
 
 import java.sql.Connection;
@@ -121,5 +122,62 @@ public class DepartmentDAO implements IDepartmentDAO
       
       return result;
    }
+
+	@Override
+	public Department searchId(String departmentId) throws SQLException
+	{
+		Department result = new Department();
+		
+		Connection conn = dataSource.getConnection();
+		
+		String sql = "SELECT DEPARTMENTID, DEPARTMENTNAME, DELCHECK FROM DEPARTMENTVIEW WHERE DEPARTMENTID = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, Integer.parseInt(departmentId));
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next())
+		{
+			result.setDepartmentId(rs.getString("DEPARTMENTID"));
+			result.setDepartmentName(rs.getString("DEPARTMENTNAME"));
+			result.setDelCheck(rs.getInt("DELCHECK"));
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return result;
+	}
+	
+	@Override
+	public int count(String departmentName) throws SQLException
+	{
+		int result = 0;
+		
+		Connection conn = dataSource.getConnection();
+		
+		String sql = "SELECT COUNT(*) AS COUNT FROM DEPARTMENT WHERE DEPARTMENTNAME = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, departmentName);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next())
+		{
+			result = rs.getInt("COUNT");
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return result;
+	}
+   
+   
    
 }

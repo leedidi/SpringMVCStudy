@@ -121,5 +121,65 @@ public class PositionDAO implements IPositionDAO
 		
 		return result;
 	}
+
+	@Override
+	public Position searchId(String positionId) throws SQLException
+	{
+		Position result = new Position();
+		
+		Connection conn = dataSource.getConnection();
+		
+		String sql = "SELECT POSITIONID, POSITIONNAME, MINBASICPAY, DELCHECK FROM POSITIONVIEW WHERE POSITIONID=?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		//pstmt.setInt(1, Integer.parseInt(positionId));
+		pstmt.setString(1, positionId);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next())
+		{
+			result.setPositionId(rs.getString("POSITIONID"));
+			result.setPositionName(rs.getString("POSITIONNAME"));
+			result.setMinBasicPay(rs.getInt("MINBASICPAY"));
+			result.setDelCheck(rs.getInt("DELCHECK"));
+			
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return result;
+	}
+
+	@Override
+	public int count(String positionName) throws SQLException
+	{
+		int result = 0;
+		
+		Connection conn = dataSource.getConnection();
+		
+		String sql = "SELECT COUNT(*) AS COUNT FROM POSITION WHERE POSITIONNAME = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, positionName);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next())
+		{
+			result = rs.getInt("COUNT");
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return result;
+	}
+	
+		
+	
 	
 }

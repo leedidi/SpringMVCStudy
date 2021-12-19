@@ -72,7 +72,6 @@
 						<input type="text" id="regionId" name="regionId"
 						value="${region.regionId }" readonly="readonly">
 					</td>
-					</tr>
 									
 					<th>지역 이름</th>
 					<td>

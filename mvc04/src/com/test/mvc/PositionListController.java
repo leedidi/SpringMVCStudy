@@ -1,7 +1,8 @@
-/*=====================================
-  #21. EmployeeInsertFormController.java
+/*===========================
+   PositionListController.java
    - 사용자 정의 컨트롤러
-=====================================*/
+============================*/
+
 package com.test.mvc;
 
 import java.util.ArrayList;
@@ -13,13 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-public class EmployeeInsertFormController implements Controller
+public class PositionListController implements Controller
 {
-	// 인터페이스 형태의 속성 구성
-	private IEmployeeDAO dao;
 	
-	// setter 구성
-	public void setDao(IEmployeeDAO dao)
+	private IPositionDAO dao;
+	
+	public void setDao(IPositionDAO dao)
 	{
 		this.dao = dao;
 	}
@@ -47,28 +47,20 @@ public class EmployeeInsertFormController implements Controller
 		}
 		// ----------------------------------------------------------------------- 세션 처리 과정 추가
 		
-		
-		ArrayList<Region> regionList = new ArrayList<Region>();
-		ArrayList<Department> departmentList = new ArrayList<Department>();
 		ArrayList<Position> positionList = new ArrayList<Position>();
 		
 		try
 		{
-			regionList = dao.regionList();
-			departmentList = dao.departmentList();
-			positionList = dao.positionList();
+			positionList = dao.list();
 			
-			mav.addObject("regionList", regionList);
-			mav.addObject("departmentList", departmentList);
 			mav.addObject("positionList", positionList);
-			
-			mav.setViewName("WEB-INF/view/EmployeeInsertForm.jsp");
+			mav.setViewName("/WEB-INF/view/PositionList.jsp");
 			
 		} catch (Exception e)
 		{
 			System.out.println(e.toString());
 		}
-		
+
 		
 		return mav;
 	}

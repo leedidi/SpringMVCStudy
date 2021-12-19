@@ -9,15 +9,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RegList.jsp</title>
+<title>DepartmentList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+
 </head>
 <body>
 
 <!-----------------------------------------------------------------------------
-   #15. RegList.jsp
-   - 지역 리스트 출력 페이지
-   - 사용자가 접근하는 지역 데이터 출력 페이지
+   #15. DepList.jsp
+   - 부서 리스트 출력 페이지
+   - 사용자가 접근하는 부서 데이터 출력 페이지
 ----------------------------------------------------------------------------->
 
 <div>
@@ -29,24 +32,22 @@
 
 	<!-- 콘텐츠 영역 -->
 	<div id="content">
-	
-		<h1>[ 지역 리스트 ]</h1>
+		<h1>[ 부서 리스트 ]</h1>
 		<hr>
-		
+
 		<br><br>
 		<table id="customers" class="table">
 			<tr>
 				<!-- 항목 15EA -->
-				<th>지역 번호</th>
-				<th>지역 이름</th>
+				<th>부서 번호</th>
+				<th>부서 이름</th>
 			</tr>
 			<tr>
-			<c:forEach var="region" items="${regionList }">
+			<c:forEach var="department" items="${departmentList }">
 			<tr>
-				<td>${region.regionId }</td>
-				<td>${region.regionName }</td>				
-
-			</tr>
+				<td>${department.departmentId }</td>
+				<td>${department.departmentName }</td>				
+			</tr> 
 			</c:forEach> 
 			 
 		</table>		
