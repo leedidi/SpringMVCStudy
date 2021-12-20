@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.IMemberDAO">
+
+	<!--@ 메소드 하나도 없지만 메소드인척 해야함! 객체 아니지만 객체행세 해야함! 누굴 따라서? ↑ ImemberDAO를 따라서!  -->
+	<!--@ 마이바티스 프레임워크가 객체화를 시킨다. IMemberDAO의 유전자 정보 추출
+	(A 노릇하는 존재 만들기 위해서 A 부모님의 유전자 가져오는 것처럼) -->
+	<select id="list" resultType="com.test.mybatis.MemberDTO">
+		SELECT MID, NAME, TELEPHONE
+		FROM TBL_MEMBERLIST
+		ORDER BY MID
+	</select>
+	
+	<!-- resultType: 반환해야 하는 resultType-->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM TBL_MEMBERLIST
+	</select>
+	
+	<insert id="add">
+		INSERT INTO TBL_MEMBERLIST(MID, NAME, TELEPHONE)
+		VALUES(MEMBERLISTSEQ.NEXTVAL, ????, ????)
+	</insert>
+
+</mapper>
