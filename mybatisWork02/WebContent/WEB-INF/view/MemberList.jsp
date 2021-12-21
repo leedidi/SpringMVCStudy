@@ -23,6 +23,40 @@
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<script type="text/javascript">
+	
+	
+	$(function()
+	{	
+		// 삭제 버튼 클릭 이벤트 등록 및 삭제 액션 처리
+		$(".btnDelete").click(function()
+		{
+			if (confirm("현재 데이터를 정말 삭제하시겠습니까?"))
+			{
+				$(location).attr("href", "memberdelete.action?mid=" + $(this).val());
+			}
+		});
+		
+		// 수정 버튼 클릭 이벤트 등록 및 삭제 액션 처리
+		$(".btnUpdate").click(function()
+		{
+			$("#title").html("회원 정보 수정");
+			
+			var mid = $(this).parents("tr").find("td:eq(0)").text();
+			var name = $(this).parents("tr").find("td:eq(1)").text();
+			var telephone = $(this).parents("tr").find("td:eq(2)").text();
+			
+			$("#mid").val(mid);
+			$("#name").val(name);
+			$("#telephone").val(telephone);
+			
+			$("form").attr("action", "memberupdate.action");
+		});
+	});
+
+</script>
+
+
 </head>
 <body>
 
@@ -41,7 +75,7 @@
       
          <div class="panel-body">
             <form role="form" action="memberinsert.action" method="post">
-               
+               <input type="hidden" id="mid" name="mid">
                <div class="form-group">
                   <label for="name">NAME : </label>
                   <input type="text" class="form-control" id="name" name="name" />
@@ -52,7 +86,7 @@
                   <label for="telephone">TELEPHONE : </label>
                   <input type="tel" class="form-control" id="telephone" name="telephone" />
                </div>
-               
+               <!-- @ name을 받ㅇ아와줌! 이 요청에 의해 action:memberinsert.action처리 -->
                <button type="submit" class="btn btn-default btn-sm">SUBMIT</button>
                <button type="button" class="btn btn-default btn-sm btnCancel">CANCEL</button>
             </form>
@@ -93,10 +127,10 @@
                    		<td>${member.name }</td>
                    		<td>${member.telephone }</td>
                    		<td>
+                   			<button type="button" class="btn btn-primary btn-xs btnUpdate"
+							value="${member.mid }">수정</button>
 							<button type="button" class="btn btn-danger btn-xs btnDelete" 
 							value="${member.mid }">삭제</button>
-							<button type="button" class="btn btn-primary btn-xs btnUpdate"
-							value="${member.mid }">수정</button>
 						</td>
 					</tr>
                    </c:forEach> 

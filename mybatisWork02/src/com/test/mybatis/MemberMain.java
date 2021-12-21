@@ -42,6 +42,38 @@ public class MemberMain
 		
 		return "WEB-INF/view/MemberList.jsp";
 	}
+	
+	@RequestMapping(value = "/memberinsert.action", method = RequestMethod.POST)
+	public String memberInsert(MemberDTO m)
+	{
+		IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
+		
+		dao.add(m);
+		
+		return "redirect:memberlist.action";
+	}
+	
+	@RequestMapping(value = "/memberdelete.action", method = RequestMethod.GET)
+	public String memberDelete(MemberDTO m)
+	{
+		IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
+		
+		dao.remove(m);
+		
+		return "redirect:memberlist.action";
+	}
+	
+	@RequestMapping(value = "/memberupdate.action", method = RequestMethod.POST)
+	public String memberUpdate(MemberDTO m)
+	{
+		IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
+		
+		dao.modify(m);
+		
+		return "redirect:memberlist.action";
+		//@ : 항상 붙여서 작성해주기!
+		
+	}
 }
 
 
