@@ -67,7 +67,7 @@ public class MemberMain
 	public String memberUpdate(MemberDTO m)
 	{
 		IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
-		
+		   
 		dao.modify(m);
 		
 		return "redirect:memberlist.action";
