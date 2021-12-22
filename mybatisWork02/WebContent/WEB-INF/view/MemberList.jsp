@@ -121,7 +121,7 @@
                   </tr>
                    -->
                    <c:forEach var="member" items="${list }">
-                   <!-- IMemberDAO에서 ArayList가 아닌 MemerDTO들을 넘겨줌... 그래도됨! 이렇게 하나하나 가져올수 있음! -->
+                   <!-- IMemberDAO에서 ArayList가 아닌 MemberDTO들을 넘겨줌... 그래도됨! 이렇게 하나하나 가져올수 있음! -->
                    	<tr>
                    		<td>${member.mid }</td>
                    		<td>${member.name }</td>

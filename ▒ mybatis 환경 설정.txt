@@ -157,10 +157,10 @@ http://localhost:8090/mybatisWork02/memberlist.action
    - GradeDTO.java              → 데이터 전송 객체 자료형 클래스(DTO)
                                    성적 데이터 저장 및 전송
    - IStudnetDAO.java           → 인터페이스
-   - IGradeDAO.java             → 인터페이스
+   - IGradeDAO.java             → 인터페이스 (-)
   
    - StudentDAO.xml             → mybatis 환경 설정 파일 활용
-   - GradeDAO.xml               → mybatis 환경 설정 파일 활용
+   - GradeDAO.xml               → mybatis 환경 설정 파일 활용 (-)
    
    - StudentController.java     → mybatis 객체 활용(Controller)
    - GradeController.java       → mybatis 객체 활용(Controller)

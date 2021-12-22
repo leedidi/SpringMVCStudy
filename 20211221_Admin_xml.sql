@@ -387,6 +387,37 @@ FROM
 WHERE RNUM >=1 AND RNUM <= 10;
 
 
+--○ 이름 수정본
+SELECT *
+FROM VIEW_NOTICE;
+
+SELECT NO_NO, NOS_NAME, TITLE, NODATE
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT NOTICE_NO "NO_NO", NOTICE_TITLE "TITLE", NOTICESORT_NAME "NOS_NAME", TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NODATE
+        FROM VIEW_NOTICE
+        ORDER BY NOTICE_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+--○ 카테고리 출력본
+SELECT NAME
+FROM NOTICE_SORT;
+
+SELECT NOS_NAME
+    FROM
+    (
+     SELECT NAME "NOS_NAME"
+     FROM NOTICE_SORT
+    );
+
+
+
+
 --○ 특정 게시물의 내용을 읽어오는 쿼리문 구성
 --   (NUM, NAME, PWD, EMAIL, SUBJECT, CONTENT, IPADDR, HITCOUNT, CREATED)
 /*
@@ -435,3 +466,417 @@ SELECT NVL(MAX(NUM), -1) AS BEFORENUM FROM TBL_BOARD WHERE NUM<9
 SELECT NVL(MAX(NO_NO), -1) AS BEFORENUM
 FROM NOTICE
 WHERE NO_NO<10;
+
+
+SELECT NO_NO, AD_ID, NOS_NO, TITLE, NODATE
+FROM NOTICE;
+
+--------------------------------------------------------------------------------
+
+--○ 공지사항 게시물 출력 뷰
+SELECT NO_NO, NOS_NAME, TITLE, NODATE, CONTENT
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT NOTICE_NO "NO_NO", NOTICE_TITLE "TITLE", NOTICESORT_NAME "NOS_NAME", TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NODATE
+        , NOTICE_CONTENT "CONTENT"
+        FROM VIEW_NOTICE
+        ORDER BY NOTICE_NO DESC
+    ) DATA
+)
+WHERE NO_NO=1;
+
+--------------------------------------------------------------------------------
+--○ 체크리스트 신고 게시판
+
+--○ 신고 게시판 조회 뷰
+--○ 다른거들이랑 DTO를 따로 만들까봄... 칼럼명 주의
+SELECT *
+FROM VIEW_REPORT;
+
+
+SELECT NOTICE_NO, NOTICESORT_NAME, NOTICE_TITLE, NOTICE_DATE
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT NOTICE_NO, NOTICE_TITLE, NOTICESORT_NAME, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE
+        FROM VIEW_NOTICE
+        ORDER BY NOTICE_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+
+CREATE OR REPLACE VIEW VIEW_REPORT
+AS
+SELECT ROWNUM AS RNUM, TITLE, STATUSNAME, REPORTDATE, REPORTERNO, REPORTERNAME, WRITERNO, WRITERNAME, RPCHECK_NO, WHY
+FROM
+(
+    SELECT W.TITLE AS TITLE, S.STATUSNAME AS STATUSNAME, R.REPORTDATE AS REPORTDATE
+    , R.AC_NO AS REPORTERNO, P.PE_ID AS REPORTERNAME, C.AC_NO AS WRITERNO, PP.PE_ID AS WRITERNAME, R.RPCHECK_NO AS RPCHECK_NO, R.WHY AS WHY
+    FROM REPORT_CHECK R, REPORT_WHY W, REPORT_STATUS S, CHECKLIST C, PERSONAL P, PERSONAL PP
+    WHERE R.WHY_NO = W.WHY_NO(+)
+      AND R.STATUS_NO = S.STATUS_NO(+)
+      AND R.CHECK_NO = C.CHECK_NO(+)
+      AND R.AC_NO = P.AC_NO(+)
+      AND C.AC_NO = PP.AC_NO(+)
+);
+
+
+--○ 신고 게시물 조회 뷰
+--○ 내용의 신고당한 곳 주소는 추후 추가! 앞은 고정/ 뒤만 숫자 나오게..해주면 될듯
+CREATE OR REPLACE VIEW VIEW_REPORTSEE
+AS
+SELECT ROWNUM AS RNUM, RPCHECK_NO, TITLE, REPORTDATE, REPORTERNAME, WRITERNAME, CHECK_NO, WHY
+FROM
+(
+    SELECT W.TITLE AS TITLE, S.STATUSNAME AS STATUSNAME, R.REPORTDATE AS REPORTDATE, R.CHECK_NO AS CHECK_NO
+    , R.AC_NO AS REPORTERNO, P.PE_ID AS REPORTERNAME, C.AC_NO AS WRITERNO, PP.PE_ID AS WRITERNAME, R.RPCHECK_NO AS RPCHECK_NO, R.WHY AS WHY
+    FROM REPORT_CHECK R, REPORT_WHY W, REPORT_STATUS S, CHECKLIST C, PERSONAL P, PERSONAL PP
+    WHERE R.WHY_NO = W.WHY_NO(+)
+      AND R.STATUS_NO = S.STATUS_NO(+)
+      AND R.CHECK_NO = C.CHECK_NO(+)
+      AND R.AC_NO = P.AC_NO(+)
+      AND C.AC_NO = PP.AC_NO(+)
+);
+
+SELECT *
+FROM VIEW_REPORTSEE;
+
+--○ 신고 처리(업데이트)
+-- 관리자가 신고 글 들어가서 승인/허위신고/반려 버튼 눌렀을 때...
+-- 승인 : 신고글 상태 해결 완료+신고 대상자에게 경고 1회 추가
+-- 허위신고 : 신고글 상태 해결 완료 + 신고작성자에게 경고 1회 추가
+-- 반려 : 신고글 상태 해결 완료
+
+SELECT *
+FROM REPORT_CHECK;
+
+COMMIT;
+ROLLBACK;
+
+--@ SET은 상태값 바꿔주는거라 고정!
+--@ WHERE은 바꿔주세용
+--@ 경고도 걍.. 카운트 해주는거로했나? 따로 넣는거 없는 듯
+
+-- 승인 처리
+UPDATE REPORT_CHECK
+SET STATUS_NO=1
+WHERE RPCHECK_NO=1;
+
+-- 허위신고 처리
+UPDATE REPORT_CHECK
+SET STATUS_NO=3
+WHERE RPCHECK_NO=1;
+
+-- 반려 처리
+UPDATE REPORT_CHECK
+SET STATUS_NO=2
+WHERE RPCHECK_NO=1;
+
+
+--○ 게시물 목록을 읽어오는 쿼리문(이전, 다음 번호)
+--○ 특정 게시물의 이전 번호 읽어오는 쿼리문 구성
+SELECT NVL(MIN(RPCHECK_NO), -1) AS NEXTNUM
+FROM REPORT_CHECK
+WHERE RPCHECK_NO>1;
+
+--○ 특정 게시물의 다음 번호 읽어오는 쿼리문 구성 -- 7, 207, 208, 209
+SELECT NVL(MAX(RPCHECK_NO), -1) AS BEFORENUM
+FROM REPORT_CHECK
+WHERE RPCHECK_NO<2;
+
+SELECT *
+FROM NOTICE_SORT;
+
+COMMIT;
+
+SELECT *
+FROM NOTICE;
+
+ROLLBACK;
+
+INSERT INTO NOTICE(NO_NO, AD_ID, NOS_NO, TITLE, CONTENT, NODATE)
+		VALUES(NOTICESEQ.NEXTVAL, 'admin2', 2, 'test', 'test', SYSDATE);
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------12/ 21-----------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+--◈ 페이징 처리
+
+--① 자주묻는질문 FAQ  
+--○ 게시물 번호의 최대값을 얻어내는 쿼리문 구성
+SELECT NVL(MAX(FAQ_NO), 0) AS MAXNUM
+FROM FAQ;
+-->> 3
+
+/*
+--수 확인 차 조회
+SELECT *
+FROM FAQ;
+-->> 3 
+*/
+--○ DB 레코드의 갯수를 가져오는 쿼리문 구성
+--@ 한 페이지에 몇개씩 보여줄건지 랜더링.... 그래서 전체 게시물이 몇 개다 가 필요함.
+
+SELECT COUNT(*) AS COUNT
+FROM FAQ;
+
+--○ 특정 영역의(시작번호-끝번호) 게시물의 목록을 읽어오는 쿼리문 구성
+
+/*
+-- 뷰 확인차
+SELECT *
+FROM VIEW_FAQ;
+*/
+
+-- 보여지는 화면이라서 뷰로 구성
+SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, FAQSORT_NO, FAQSORT_NAME
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, FAQSORT_NO, FAQSORT_NAME
+        FROM VIEW_FAQ
+        ORDER BY FAQ_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+--○ 특정 게시물의 내용을 읽어오는 쿼리문 구성
+SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, FAQSORT_NO, FAQSORT_NAME
+FROM VIEW_FAQ
+WHERE FAQ_NO=3;
+
+--○ 특정 게시물의 이전 번호 읽어오는 쿼리문 구성
+SELECT NVL(MIN(FAQ_NO), -1) AS NEXTNUM
+FROM FAQ
+WHERE FAQ_NO>2;
+
+--○ 특정 게시물의 다음 번호 읽어오는 쿼리문 구성 // 이건 10까지만 나오게 하는거
+SELECT NVL(MAX(FAQ_NO), -1) AS BEFORENUM
+FROM FAQ
+WHERE FAQ_NO<10;
+
+                         
+--② 회원목록                ---------------------------------------------------
+/*
+--○ 칼럼명 조회
+SELECT * FROM COLS WHERE TABLE_NAME = 'PERSONAL';
+*/
+
+--○ 게시물 번호의 최대값을 얻어내는 쿼리문 구성
+SELECT NVL(MAX(AC_NO), 0) AS MAXNUM
+FROM PERSONAL;
+-->> 38
+
+/
+--수 확인 차 조회
+SELECT *
+FROM PERSONAL;
+-->> 3 
+*/
+--○ DB 레코드의 갯수를 가져오는 쿼리문 구성
+--@ 한 페이지에 몇개씩 보여줄건지 랜더링.... 그래서 전체 게시물이 몇 개다 가 필요함.
+
+SELECT COUNT(*) AS COUNT
+FROM PERSONAL;
+-->> 33
+
+--○ 특정 영역의(시작번호-끝번호) 게시물의 목록을 읽어오는 쿼리문 구성
+/*
+SELECT * FROM COLS WHERE TABLE_NAME = 'PERSONAL';
+*/
+-- 아이디, 닉네임, 이름, 이메일, 가입일, 계정번호
+SELECT PE_ID, NICKNAME, NAME, EMAIL, PEDATE, AC_NO
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT PE_ID, NICKNAME, NAME, EMAIL,TO_CHAR(PEDATE, 'YYYY-MM-DD') AS PEDATE, AC_NO
+        FROM PERSONAL
+        ORDER BY AC_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+--○ 특정 게시물의 내용을 읽어오는 쿼리문 구성
+SELECT PE_ID, NICKNAME, NAME, EMAIL, PEDATE, AC_NO
+FROM PERSONAL
+WHERE AC_NO=31;
+
+--○ 특정 게시물의 이전 번호 읽어오는 쿼리문 구성
+SELECT NVL(MIN(AC_NO), -1) AS NEXTNUM
+FROM PERSONAL
+WHERE AC_NO>12;
+
+
+--○ 특정 게시물의 다음 번호 읽어오는 쿼리문 구성 // 이건 10까지만 나오게 하는거
+SELECT NVL(MAX(AC_NO), -1) AS BEFORENUM
+FROM PERSONAL
+WHERE AC_NO<10;
+
+
+--③ 탈퇴회원목록    WITHDRAWAL    -------------------------------------------------
+/*
+--○ 칼럼명 조회
+SELECT * FROM COLS WHERE TABLE_NAME = 'VIEW_WITHDRAWAL';
+*/
+
+--○ 게시물 번호의 최대값을 얻어내는 쿼리문 구성
+SELECT NVL(MAX(WIR_NO), 0) AS MAXNUM
+FROM WITHDRAWAL;
+-->> 5
+
+/*
+--수 확인 차 조회
+SELECT *
+FROM WITHDRAWAL;
+-->> 2
+*/
+--○ DB 레코드의 갯수를 가져오는 쿼리문 구성
+--@ 한 페이지에 몇개씩 보여줄건지 랜더링.... 그래서 전체 게시물이 몇 개다 가 필요함.
+
+SELECT COUNT(*) AS COUNT
+FROM WITHDRAWAL;
+
+--○ 특정 영역의(시작번호-끝번호) 게시물의 목록을 읽어오는 쿼리문 구성
+
+/*
+-- 뷰 확인차
+SELECT *
+FROM VIEW_WITHDRAWAL;
+*/
+/*
+SELECT * FROM COLS WHERE TABLE_NAME = 'VIEW_WITHDRAWAL';
+*/
+-- 보여지는 화면이라서 뷰로 구성
+
+SELECT WITHDRAWAL_ID, NICKNAME, WITHDRAWAL_NAME, WITHDRAWAL_EMAIL, WITHDRAWAL_DATE, REASON, WITHDRAWAL_NO
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (   SELECT WITHDRAWAL_ID, NICKNAME, WITHDRAWAL_NAME, WITHDRAWAL_EMAIL, TO_CHAR(WITHDRAWAL_DATE, 'YYYY-MM-DD') AS WITHDRAWAL_DATE, REASON, WITHDRAWAL_NO
+        FROM VIEW_WITHDRAWAL
+        ORDER BY WITHDRAWAL_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+
+
+
+--○ 특정 게시물의 내용을 읽어오는 쿼리문 구성 @@@@@ 일단 햇는데 .,, 필요할련지,,
+SELECT WITHDRAWAL_ID, NICKNAME, WITHDRAWAL_NAME, WITHDRAWAL_EMAIL, WITHDRAWAL_DATE, REASON, WITHDRAWAL_NO
+FROM WITHDRAWAL
+WHERE WITHDRAWAL_NO=1;
+
+--○ 특정 게시물의 이전 번호 읽어오는 쿼리문 구성
+SELECT NVL(MIN(WI_NO), -1) AS NEXTNUM
+FROM WITHDRAWAL
+WHERE WI_NO>1;
+
+--○ 특정 게시물의 다음 번호 읽어오는 쿼리문 구성 // 이건 10까지만 나오게 하는거
+SELECT NVL(MAX(WI_NO), -1) AS BEFORENUM
+FROM WITHDRAWAL
+WHERE WI_NO<2;
+
+--④ 신고처리            -------------------------------------------------------
+
+--○ 칼럼명 조회
+SELECT * FROM COLS WHERE TABLE_NAME = 'REPORT_CHECK';
+
+SELECT * FROM COLS WHERE TABLE_NAME = 'VIEW_REPORT';
+
+-- 확인차
+/*
+SELECT *
+FROM REPORT_CHECK;
+*/
+
+--○ 게시물 번호의 최대값을 얻어내는 쿼리문 구성
+SELECT NVL(MAX(RPCHECK_NO), 0) AS MAXNUM
+FROM REPORT_CHECK;
+-->> 2
+
+--○ DB 레코드의 갯수를 가져오는 쿼리문 구성
+--@ 한 페이지에 몇개씩 보여줄건지 랜더링.... 그래서 전체 게시물이 몇 개다 가 필요함.
+
+SELECT COUNT(*) AS COUNT
+FROM REPORT_CHECK;
+
+--○ 특정 영역의(시작번호-끝번호) 게시물의 목록을 읽어오는 쿼리문 구성
+
+/
+-- 뷰 확인차
+SELECT *
+FROM VIEW_REPORT;
+*/
+-- 여기에 SYSDATE 인지  REPORTDATE 인지!! @@@@@
+TO_CHAR(REPORTDATE, 'YYYY-MM-DD') AS DATE
+TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS 
+-- 보여지는 화면이라서 뷰로 구성
+--    순번     상태        사유     날짜   시간
+SELECT RNUM, STATUSNAME, TITLE, REPORTDATE, REPORTDATE
+FROM
+(
+    SELECT ROWNUM RONUM, DATA.*
+    FROM
+    (
+        RNUM, STATUSNAME, TITLE, TO_CHAR(REPORTDATE, 'YYYY-MM-DD') AS DATE, TO_CHAR(REPORTDATE, 'HH:MI:SS') AS TIME 
+        FROM VIEW_REPORT
+        ORDER BY RNUM DESC
+    ) DATA
+)
+WHERE RONUM >=1 AND RONUM <= 10;
+
+--○ 특정 게시물의 내용을 읽어오는 쿼리문 구성@@@@@ ReportSee 인가?
+-- 신고번호, 신고카테고리, 신고자. 원글작성자, 작성일시, 작성시간, 내용, 상세사유
+SELECT ,WHY
+
+RPCHECK_NO, TITLE, REPORTDATE
+REPORTERNO
+REPORTERNAME
+WRITERNO
+WRITERNAME
+RPCHECK_NO
+WHY
+FROM VIEW_REPORT
+WHERE RNUM=1;
+
+--○ 특정 게시물의 이전 번호 읽어오는 쿼리문 구성
+SELECT NVL(MIN(RPCHECK_NO), -1) AS NEXTNUM
+FROM REPORT_CHECK
+WHERE RPCHECK_NO>1;
+
+--○ 특정 게시물의 다음 번호 읽어오는 쿼리문 구성 // 이건 10까지만 나오게 하는거
+SELECT NVL(MAX(RPCHECK_NO), -1) AS BEFORENUM
+FROM REPORT_CHECK
+WHERE RPCHECK_NO<2;
+
+
+
+SELECT NO_NO, TITLE, CONTENT, TO_CHAR(NODATE, 'YYYY-MM-DD') AS NODATE
+FROM NOTICE
+WHERE NO_NO = 1;
+
+COMMIT;
+ROLLBACK;
+
+SELECT *
+FROM NOTICE;
+
+UPDATE NOTICE
+SET TITLE = '올해의 베스트 추천'
+   ,CONTENT = '여기 저기 다 좋아요. 베스트 입니다~!'
+   ,NOS_NO = 1
+WHERE NO_NO=13;
