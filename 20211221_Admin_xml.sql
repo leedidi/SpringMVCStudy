@@ -183,6 +183,9 @@ SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
 FROM VIEW_FAQ
 WHERE FAQSORT_NO=1;
 
+--5. 자주 묻는 질문 카테고리 명 / 번호 조회
+
+
 ----- 12/20 --------------------------------------------------------------------
 SELECT USER
 FROM DUAL;
