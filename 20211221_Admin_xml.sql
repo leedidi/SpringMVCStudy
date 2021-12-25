@@ -915,3 +915,27 @@ FROM
     ) DATA
 )
 WHERE RNUM >=1 AND RNUM <= 10;
+----------------------------------------------------------------------
+
+--○ 회원 리스트 페이징 처리용 사용할 자료 
+
+--○ 한 페이지에 출력될 회원 리스트(10개)
+SELECT PE_ID, NICKNAME, NAME, EMAIL, PEDATE, AC_NO
+FROM
+(
+    SELECT ROWNUM RNUM, DATA.*
+    FROM
+    (
+        SELECT PE_ID, NICKNAME, NAME, EMAIL,TO_CHAR(PEDATE, 'YYYY-MM-DD') AS PEDATE, AC_NO
+        FROM PERSONAL
+        ORDER BY AC_NO DESC
+    ) DATA
+)
+WHERE RNUM >=1 AND RNUM <= 10;
+
+--○ 페이징에 출력할 번호를 계산하기 위한 게시물의 총 갯수
+SELECT COUNT(PE_ID) AS COUNT
+FROM PERSONAL;
+
+
+
