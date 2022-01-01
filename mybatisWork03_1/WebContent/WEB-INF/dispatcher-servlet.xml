@@ -13,7 +13,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- - 『name=""』 속성에 매핑 주소를 등록한다. -->
 	<!-- 이 과정에서 Front Controller 가 갖고있는 확장자의 형태로 구성한다. -->
 	<!-- - 『class=""』 속성은 Controller 객체의 클래스 경로 및 이름을 등록한다. -->
-	<!-- @@@ 테스트용 주석 -->
+	<!-- @@@@ 테스트용 주석 -->
 
 	<!-- ① 기존 코드 -->
 	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
