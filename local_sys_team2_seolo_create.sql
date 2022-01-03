@@ -60,3 +60,4 @@ DROP USER team_seolo CASCADE;
 -- ○ 암호화 권한 부여
 GRANT EXECUTE ON DBMS_OBFUSCATION_TOOLKIT TO team_seolo;
 
+--○ 암호화 복호화_02 로가서 CRYPTPACK 컴파일 하기
